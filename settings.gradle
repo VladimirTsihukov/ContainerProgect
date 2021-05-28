@@ -1,0 +1,2 @@
+rootProject.name = "ContainerProgect"
+include ':app'
