@@ -30,4 +30,10 @@ class MainActivity : AppCompatActivity() {
             .putExtra(SampleReceiver.ARG_MESSAGE, "My 1 broadcast Receiver")
         sendBroadcast(intent)
     }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(sampleReceiver)
+    }
+
 }
