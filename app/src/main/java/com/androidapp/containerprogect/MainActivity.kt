@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.fragment.FragmentAlertDialog
+import com.androidapp.containerprogect.fragment.FragmentCustomDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,10 +14,10 @@ class MainActivity : AppCompatActivity() {
 
         initViewAlertDialog()
         initViewFragmentAlertDialog()
+        initViewCustomDialog()
     }
 
     private fun initViewAlertDialog() {
-
         btn_show_alert_dialog.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Title")
@@ -34,13 +35,19 @@ class MainActivity : AppCompatActivity() {
                 }
                 .show()
         }
-
     }
 
     private fun initViewFragmentAlertDialog() {
         btn_fragment_show_alert_dialog.setOnClickListener {
             val dialog = FragmentAlertDialog()
             dialog.show(supportFragmentManager, FragmentAlertDialog.TAG)
+        }
+    }
+
+    private fun initViewCustomDialog() {
+        btn_show_custom_dialog_fragment.setOnClickListener {
+            val dialog = FragmentCustomDialog()
+            dialog.show(supportFragmentManager, FragmentCustomDialog.TAG)
         }
     }
 }
