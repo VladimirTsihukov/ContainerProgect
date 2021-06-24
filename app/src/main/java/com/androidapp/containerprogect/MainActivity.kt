@@ -3,6 +3,7 @@ package com.androidapp.containerprogect
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.androidapp.containerprogect.fragment.FragmentAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initViewAlertDialog()
+        initViewFragmentAlertDialog()
     }
 
     private fun initViewAlertDialog() {
@@ -33,5 +35,12 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
 
+    }
+
+    private fun initViewFragmentAlertDialog() {
+        btn_fragment_show_alert_dialog.setOnClickListener {
+            val dialog = FragmentAlertDialog()
+            dialog.show(supportFragmentManager, FragmentAlertDialog.TAG)
+        }
     }
 }
