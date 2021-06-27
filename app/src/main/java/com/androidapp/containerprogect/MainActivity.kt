@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.fragment.FragmentAlertDialog
 import com.androidapp.containerprogect.fragment.FragmentCustomDialog
+import com.androidapp.containerprogect.fragment.SampleBottomSheet
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         initViewAlertDialog()
         initViewFragmentAlertDialog()
         initViewCustomDialog()
+        initViewBottomSheetDialog()
     }
 
     private fun initViewAlertDialog() {
@@ -48,6 +50,13 @@ class MainActivity : AppCompatActivity() {
         btn_show_custom_dialog_fragment.setOnClickListener {
             val dialog = FragmentCustomDialog()
             dialog.show(supportFragmentManager, FragmentCustomDialog.TAG)
+        }
+    }
+
+    private fun initViewBottomSheetDialog() {
+        btn_show_bottom_sheet_dialog.setOnClickListener {
+            val dialogBottomSheet = SampleBottomSheet()
+            dialogBottomSheet.show(supportFragmentManager, SampleBottomSheet.TAG)
         }
     }
 }

@@ -33,6 +33,8 @@ class FragmentCustomDialog : DialogFragment() {
         }
     }
 
+
+
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
         showToast(context, "You dismissed dialog")
