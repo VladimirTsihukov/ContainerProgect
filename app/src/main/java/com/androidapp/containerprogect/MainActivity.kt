@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         initViewExpandButton()
         initViewCollapseButton()
         initViewHidingButton()
+        initViewFragmentBottomSheet()
+        initViewBottomSheetDialog()
     }
 
     private fun bottomSheetCallback() {
@@ -37,18 +40,21 @@ class MainActivity : AppCompatActivity() {
                 when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         state = "STATE_COLLAPSED"
+                        animateFab(0, 200)
                     }
                     BottomSheetBehavior.STATE_DRAGGING -> {
                         state = "STATE_DRAGGING"
                     }
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         state = "STATE_EXPANDED"
+                        animateFab(1, 200)
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
                         state = "STATE_HALF_EXPANDED"
                     }
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         state = "STATE_HIDDEN"
+                        animateFab(0, 0)
                     }
                     BottomSheetBehavior.STATE_SETTLING -> {
                         state = "STATE_SETTLING"
@@ -59,12 +65,16 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 Log.i(TAG, "slide = $slideOffset")
-                fab.animate()
-                    .scaleX(0 + slideOffset)
-                    .scaleY(0 + slideOffset)
-                    .start()
             }
         })
+    }
+
+    private fun animateFab(scale: Int, duration: Int) {
+        fab.animate()
+            .scaleX(scale.toFloat())
+            .scaleY(scale.toFloat())
+            .setDuration(duration.toLong())
+            .start()
     }
 
     private fun initViewExpandButton() {
@@ -82,6 +92,24 @@ class MainActivity : AppCompatActivity() {
     private fun initViewHidingButton() {
         hidingBottomSheetButton.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+    }
+
+    private fun initViewFragmentBottomSheet() {
+        bottomSheetDialogFragment.setOnClickListener {
+            val bottomSheetFragmentDialog = MyBottomSheetDialogFragment()
+            bottomSheetFragmentDialog.show(supportFragmentManager, MyBottomSheetDialogFragment.TAG)
+        }
+    }
+
+    private fun initViewBottomSheetDialog() {
+        bottomSheetDialog.setOnClickListener {
+            val dialog = BottomSheetDialog(this)
+            dialog.setContentView(R.layout.fragment_bottom_sheet_dialog)
+            dialog.show()
+            dialog.setOnDismissListener{
+                Log.e(TAG, "dialog dismissed")
+            }
         }
     }
 }
