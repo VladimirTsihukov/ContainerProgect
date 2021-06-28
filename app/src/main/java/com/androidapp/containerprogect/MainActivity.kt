@@ -1,5 +1,6 @@
 package com.androidapp.containerprogect
 
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -21,12 +22,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Dialog
         initViewAlertDialog()
         initViewFragmentAlertDialog()
         initViewCustomDialog()
+
         initViewBottomSheetDialog()
+
+        //TimePicker
         initViewShowTimePicker()
         initViewShowTimePickerMaterial()
+
+        //DatePicker
+        initViewDatePicker()
 
     }
 
@@ -120,6 +128,24 @@ class MainActivity : AppCompatActivity() {
             picker.addOnDismissListener {
                 Log.i(TAG, "Dismissed dialog")
             }
+        }
+    }
+
+    private fun initViewDatePicker() {
+        btn_show_date_picker.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                this, { _, year, month, day ->
+
+                    val textDate = "Year = $year, month = $month, day = $day"
+                    showSnackbar(textDate)
+                }, year, month, day
+            )
+            datePickerDialog.show()
         }
     }
 
