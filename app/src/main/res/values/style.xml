@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.App.TimePicker.Clock" parent="Widget.MaterialComponents.TimePicker.Clock">
+        <item name="clockFaceBackgroundColor">@color/black</item>
+        <item name="clockHandColor">@color/white</item>
+        <item name="clockNumberTextColor">@color/cardview_dark_background</item>
+    </style>
+</resources>

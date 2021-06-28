@@ -33,6 +33,12 @@
         android:text="Show time picker"/>
 
     <Button
+        android:id="@+id/btn_material_show_time_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show material time picker"/>
+
+    <Button
         android:id="@+id/btn_show_date_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

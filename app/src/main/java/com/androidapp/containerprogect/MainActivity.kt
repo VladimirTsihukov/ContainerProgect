@@ -9,6 +9,8 @@ import com.androidapp.containerprogect.fragment.FragmentAlertDialog
 import com.androidapp.containerprogect.fragment.FragmentCustomDialog
 import com.androidapp.containerprogect.fragment.SampleBottomSheet
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         initViewCustomDialog()
         initViewBottomSheetDialog()
         initViewShowTimePicker()
+        initViewShowTimePickerMaterial()
 
     }
 
@@ -77,12 +80,8 @@ class MainActivity : AppCompatActivity() {
             val timePickerDialog = TimePickerDialog(
                 this@MainActivity,
                 { p0, p1, p2 ->
-                    Log.i(TAG, "Your chosen: p0=$p0, hours=$p1, minutes=$p2")
-                    Snackbar.make(
-                        this.findViewById(R.id.container),
-                        "Your chosen: hours=$p1, minutes=$p2",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    val textTime = "Hours=$p1, minutes=$p2"
+                    showSnackbar(textTime)
                 },
                 hour,
                 minute,
@@ -91,5 +90,44 @@ class MainActivity : AppCompatActivity() {
 
             timePickerDialog.show()
         }
+    }
+
+    private fun initViewShowTimePickerMaterial() {
+        btn_material_show_time_picker.setOnClickListener {
+            val picker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(7)
+                .setMinute(0)
+                .setTitleText("Select time")
+                .build()
+            picker.show(supportFragmentManager, "MaterialTimePicker")
+
+            picker.addOnCancelListener {
+                Log.i(TAG, "Dialog was cancelled")
+            }
+
+            picker.addOnNegativeButtonClickListener {
+                Log.i(TAG, "Negative button click")
+            }
+
+            picker.addOnPositiveButtonClickListener {
+                val newHour = picker.hour
+                val minutes = picker.minute
+                val textTime = "Hours = $newHour, minutes = $minutes"
+                showSnackbar(textTime)
+            }
+
+            picker.addOnDismissListener {
+                Log.i(TAG, "Dismissed dialog")
+            }
+        }
+    }
+
+    private fun showSnackbar(text: String) {
+        Snackbar.make(
+            findViewById(R.id.container),
+            text,
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 }
