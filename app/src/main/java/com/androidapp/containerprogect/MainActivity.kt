@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -58,6 +59,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 Log.i(TAG, "slide = $slideOffset")
+                fab.animate()
+                    .scaleX(0 + slideOffset)
+                    .scaleY(0 + slideOffset)
+                    .start()
             }
         })
     }
