@@ -38,11 +38,24 @@
         android:layout_height="wrap_content"
         android:text="Show material time picker"/>
 
+
     <Button
         android:id="@+id/btn_show_date_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show date picker"/>
+
+    <Button
+        android:id="@+id/btn_show_date_material_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show date material picker"/>
+
+    <Button
+        android:id="@+id/btn_show_date_material_picker_one_two_trip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show date material picker OneTwoTrip"/>
 
     <Button
         android:id="@+id/btn_show_bottom_sheet_dialog"

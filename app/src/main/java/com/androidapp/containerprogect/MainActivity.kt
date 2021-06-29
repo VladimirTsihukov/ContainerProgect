@@ -2,13 +2,19 @@ package com.androidapp.containerprogect
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
+import androidx.annotation.AttrRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.fragment.FragmentAlertDialog
 import com.androidapp.containerprogect.fragment.FragmentCustomDialog
 import com.androidapp.containerprogect.fragment.SampleBottomSheet
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -35,8 +41,11 @@ class MainActivity : AppCompatActivity() {
 
         //DatePicker
         initViewDatePicker()
+        initViewMaterialDatePicker()
+        initViewMaterialDatePickerOneTwoTrip()
 
     }
+
 
     private fun initViewAlertDialog() {
         btn_show_alert_dialog.setOnClickListener {
@@ -147,6 +156,70 @@ class MainActivity : AppCompatActivity() {
             )
             datePickerDialog.show()
         }
+    }
+
+    private fun initViewMaterialDatePicker() {
+        btn_show_date_material_picker.setOnClickListener {
+            val builder = MaterialDatePicker.Builder.datePicker()
+            //val builder = MaterialDatePicker.Builder.dateRangePicker()  //для выбора интервала
+            val picker = builder.build()
+            picker.show(supportFragmentManager, picker.toString())
+
+            picker.addOnPositiveButtonClickListener {
+                val textData = "Date: ${picker.headerText}, Date epoch value = $it"
+                val data = picker.headerText
+                Log.i(TAG, data)
+                showSnackbar(data)
+            }
+            picker.addOnNegativeButtonClickListener {
+                showSnackbar("Click negative button")
+            }
+
+            picker.addOnCancelListener {
+                showSnackbar("Dialog was cancelled")
+            }
+        }
+    }
+
+    private fun initViewMaterialDatePickerOneTwoTrip() {
+        btn_show_date_material_picker_one_two_trip.setOnClickListener {
+
+            //изменение темы еалендаря
+            val fullscreenTheme = resolveOrThrow(this, R.attr.materialCalendarFullscreenTheme)
+
+            //затемняет в календаре прошлые дни
+            val constrainBuilder = CalendarConstraints.Builder()
+            constrainBuilder.setValidator(DateValidatorPointForward.now())
+
+            val builder = MaterialDatePicker.Builder.datePicker()
+            builder.setTheme(fullscreenTheme)
+            builder.setCalendarConstraints(constrainBuilder.build())
+
+            val picker = builder.build()
+            picker.show(supportFragmentManager, picker.toString())
+
+            picker.addOnPositiveButtonClickListener {
+                val textData = "Date: ${picker.headerText}, Date epoch value = $it"
+                val data = picker.headerText
+                Log.i(TAG, data)
+                showSnackbar(data)
+            }
+            picker.addOnNegativeButtonClickListener {
+                showSnackbar("Click negative button")
+            }
+
+            picker.addOnCancelListener {
+                showSnackbar("Dialog was cancelled")
+            }
+        }
+    }
+
+    private fun resolveOrThrow(context: Context, @AttrRes attributeResId: Int): Int {
+        val typedValue = TypedValue()
+        if (context.theme.resolveAttribute(attributeResId, typedValue, true)) {
+            return typedValue.data
+        }
+        throw IllegalArgumentException(context.resources.getResourceName(attributeResId))
     }
 
     private fun showSnackbar(text: String) {
