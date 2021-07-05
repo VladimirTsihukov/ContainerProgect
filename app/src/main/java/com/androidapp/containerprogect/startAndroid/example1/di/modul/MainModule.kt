@@ -13,4 +13,5 @@ class MainModule {
     fun provideMainPresenter(databaseHelper: DatabaseHelper, netWorkUtils: NetWorkUtils) : MainPresenter {
         return MainPresenter(databaseHelper, netWorkUtils)
     }
+
 }
