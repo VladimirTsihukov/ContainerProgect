@@ -1,6 +1,7 @@
 package com.androidapp.containerprogect.startAndroid.example1.di.modul
 
-import com.androidapp.containerprogect.startAndroid.example1.DatabaseHelper
+import com.androidapp.containerprogect.startAndroid.example1.classes.DatabaseHelper
+import com.androidapp.containerprogect.startAndroid.example1.classes.Repository
 import dagger.Module
 import dagger.Provides
 
@@ -8,7 +9,10 @@ import dagger.Provides
 class StorageModule {
 
     @Provides
-    fun provideDatabaseHelper() : DatabaseHelper {
-        return DatabaseHelper()
+    fun provideRepository() = Repository()
+
+    @Provides
+    fun provideDatabaseHelper(repository: Repository) : DatabaseHelper {
+        return DatabaseHelper(repository)
     }
 }
