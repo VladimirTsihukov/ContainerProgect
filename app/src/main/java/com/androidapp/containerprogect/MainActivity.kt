@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         App.appComponent.injectMainActivity(this)
         mainSubComponent = App.appComponent.mainSubModule()
+            .activity(this)
+            .build()
 
         mainPresenter = mainSubComponent.getMainActivityPresenter()
     }
