@@ -11,10 +11,15 @@ import dagger.Subcomponent
 ])
 interface MainSubComponent {
 
-    @Subcomponent.Builder
+/*    @Subcomponent.Builder
     interface Builder {
         @BindsInstance fun activity(activity: MainActivity): Builder
         fun build(): MainSubComponent
+    }*/
+
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(@BindsInstance activity: MainActivity): MainSubComponent
     }
 
     fun getMainActivityPresenter() : MainPresenter

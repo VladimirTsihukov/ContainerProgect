@@ -18,5 +18,6 @@ import dagger.Component
 interface AppComponent {
     fun injectMainActivity(mainActivity: MainActivity)
 
-    fun mainSubModule() : MainSubComponent.Builder
+    //fun mainSubModule() : MainSubComponent.Builder
+    fun mainSubModuleFactory() : MainSubComponent.Factory
 }

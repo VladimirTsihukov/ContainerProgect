@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var netWorkUtils: NetWorkUtils
 
-
     lateinit var mainPresenter: MainPresenter
 
 /*    @field:[Inject Named("prod")]
@@ -36,15 +35,17 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mainSubComponent: MainSubComponent
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         App.appComponent.injectMainActivity(this)
-        mainSubComponent = App.appComponent.mainSubModule()
+
+     /*   mainSubComponent = App.appComponent.mainSubModule()
             .activity(this)
-            .build()
+            .build()*/
+
+        mainSubComponent = App.appComponent.mainSubModuleFactory().create(this)
 
         mainPresenter = mainSubComponent.getMainActivityPresenter()
     }
