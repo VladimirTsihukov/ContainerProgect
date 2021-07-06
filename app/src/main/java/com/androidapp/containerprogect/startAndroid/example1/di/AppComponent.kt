@@ -6,11 +6,12 @@ import dagger.Component
 
 @Component(
     modules = [
-        NetWorkUtils::class,
+        NetWorkUtilsModule::class,
         StorageModule::class,
         MainModule::class,
         ServerModule::class,
         EventModule::class,
+        AppModule::class,
     ]
 )
 interface AppComponent {

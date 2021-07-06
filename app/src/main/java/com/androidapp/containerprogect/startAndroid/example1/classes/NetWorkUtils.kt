@@ -1,9 +1,8 @@
 package com.androidapp.containerprogect.startAndroid.example1.classes
 
 import android.util.Log
-import javax.inject.Inject
 
-class NetWorkUtils @Inject constructor(
+class NetWorkUtils (
     private val connectionManager: ConnectionManager
     ) {
 
