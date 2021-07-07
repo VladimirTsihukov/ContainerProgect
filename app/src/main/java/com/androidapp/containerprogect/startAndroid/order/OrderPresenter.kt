@@ -7,6 +7,6 @@ import com.androidapp.containerprogect.startAndroid.example1.classes.NetWorkUtil
 class OrderPresenter(context: Context, netWorkUtils: NetWorkUtils) {
 
     fun getLog() {
-        Log.i("TAG", "OrderPresenter")
+        Log.i("TAG", "OrderPresenter - $this")
     }
 }

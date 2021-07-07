@@ -6,6 +6,7 @@ import com.androidapp.containerprogect.startAndroid.example1.di.subModule.MainSu
 import com.androidapp.containerprogect.startAndroid.example1.di.subModule.OrderSubComponent
 import dagger.Component
 
+@AppScope
 @Component(
     modules = [
         NetWorkUtilsModule::class,
@@ -22,4 +23,5 @@ interface AppComponent {
     //fun mainSubModule() : MainSubComponent.Builder
     fun mainSubModuleFactory() : MainSubComponent.Factory
     fun orderSubModule(): OrderSubComponent
+
 }
