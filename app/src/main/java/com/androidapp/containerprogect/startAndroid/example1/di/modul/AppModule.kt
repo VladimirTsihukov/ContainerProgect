@@ -1,14 +1,14 @@
 package com.androidapp.containerprogect.startAndroid.example1.di.modul
 
-import com.androidapp.containerprogect.App
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 
 @Module
-class AppModule (private val app: App) {
+class AppModule (private val context: Context) {
 
     @Provides
-    fun provideContext(): App {
-        return app
+    fun provideContext(): Context {
+        return context
     }
 }

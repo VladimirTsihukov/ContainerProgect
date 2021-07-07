@@ -3,6 +3,7 @@ package com.androidapp.containerprogect.startAndroid.example1.di
 import com.androidapp.containerprogect.MainActivity
 import com.androidapp.containerprogect.startAndroid.example1.di.modul.*
 import com.androidapp.containerprogect.startAndroid.example1.di.subModule.MainSubComponent
+import com.androidapp.containerprogect.startAndroid.example1.di.subModule.OrderSubComponent
 import dagger.Component
 
 @Component(
@@ -20,4 +21,5 @@ interface AppComponent {
 
     //fun mainSubModule() : MainSubComponent.Builder
     fun mainSubModuleFactory() : MainSubComponent.Factory
+    fun orderSubModule(): OrderSubComponent
 }

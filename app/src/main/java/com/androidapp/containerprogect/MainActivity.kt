@@ -1,5 +1,6 @@
 package com.androidapp.containerprogect
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.startAndroid.example1.classes.DatabaseHelper
@@ -8,7 +9,9 @@ import com.androidapp.containerprogect.startAndroid.example1.classes.ServerApi
 import com.androidapp.containerprogect.startAndroid.example1.di.Dev
 import com.androidapp.containerprogect.startAndroid.example1.di.Prod
 import com.androidapp.containerprogect.startAndroid.example1.di.subModule.MainSubComponent
+import com.androidapp.containerprogect.startAndroid.order.OrderActivity
 import com.androidapp.containerprogect.startAndroid.presenter.MainPresenter
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +51,14 @@ class MainActivity : AppCompatActivity() {
         mainSubComponent = App.appComponent.mainSubModuleFactory().create(this)
 
         mainPresenter = mainSubComponent.getMainActivityPresenter()
+
+        initView()
+    }
+
+    private fun initView() {
+        button.setOnClickListener {
+            startActivity(Intent(this, OrderActivity::class.java))
+        }
     }
 
     override fun onStart() {
