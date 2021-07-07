@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.startAndroid.example1.classes.DatabaseHelper
 import com.androidapp.containerprogect.startAndroid.example1.classes.NetWorkUtils
 import com.androidapp.containerprogect.startAndroid.example1.classes.ServerApi
+import com.androidapp.containerprogect.startAndroid.example1.classes.UiHelper
 import com.androidapp.containerprogect.startAndroid.example1.di.Dev
 import com.androidapp.containerprogect.startAndroid.example1.di.Prod
 import com.androidapp.containerprogect.startAndroid.example1.di.subModule.MainSubComponent
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mainSubComponent: MainSubComponent
 
+    lateinit var uiHelper: UiHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,6 +55,8 @@ class MainActivity : AppCompatActivity() {
 
         mainPresenter = mainSubComponent.getMainActivityPresenter()
 
+        uiHelper = mainSubComponent.getMainUiHelper()
+
         initView()
     }
 
@@ -63,10 +68,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        databaseHelper.getLog()
+        /*databaseHelper.getLog()
         netWorkUtils.getLog()
         mainPresenter.getLog()
         serverApiProv.getApi()
-        serverApiDev.getApi()
+        serverApiDev.getApi()*/
+
+        uiHelper.getLog()
     }
 }

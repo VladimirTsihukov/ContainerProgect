@@ -8,4 +8,8 @@ annotation class OrderScope
 
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
+annotation class MainScope
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
 annotation class AppScope

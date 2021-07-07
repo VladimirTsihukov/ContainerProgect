@@ -22,6 +22,6 @@ interface AppComponent {
 
     //fun mainSubModule() : MainSubComponent.Builder
     fun mainSubModuleFactory() : MainSubComponent.Factory
-    fun orderSubModule(): OrderSubComponent
+    fun orderSubModule(): OrderSubComponent.Factory
 
 }
