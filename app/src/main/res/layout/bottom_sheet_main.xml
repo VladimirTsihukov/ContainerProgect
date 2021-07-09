@@ -4,12 +4,18 @@
     android:id="@+id/bottomSheetLayout"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:background="#FFFFFF"
+    android:background="@drawable/shape_bottom_sheet"
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="64dp"
     app:behavior_draggable = "true"
     app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <ImageView
+        android:src="@drawable/ic_baseline_remove_24"
+        android:layout_width="70dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:layout_width="wrap_content"
