@@ -3,6 +3,7 @@ package com.androidapp.containerprogect
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.context.TestCoroutineContext
+import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.cancel
 
@@ -12,12 +13,17 @@ class MainActivity : AppCompatActivity() {
 
     private val testLaunchAsync = TestLaunchAsync()
     private val testCoroutineContext = TestCoroutineContext()
+    private val testDispatchers = TestDispatchers()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        testCoroutineContext.main()
+        //testCoroutineContext.main()
+
+        //testDispatchers.dispatcherDefault2()
+        testDispatchers.dispatcherUnconfined()
+
 
         btn_run.setOnClickListener {
             //testLaunchAsync.onRun5()
@@ -31,13 +37,13 @@ class MainActivity : AppCompatActivity() {
             //testLaunchAsync.coroutineStart()
         }
 
-  /*      val userData = UserData(1, "First userData", 31)
-        val scope = CoroutineScope(Dispatchers.Main + userData)
-        log("scope context: ${scope.coroutineContext}")
-        log("userData in context: ${scope.coroutineContext[UserData].toString()}")
+        /*      val userData = UserData(1, "First userData", 31)
+              val scope = CoroutineScope(Dispatchers.Main + userData)
+              log("scope context: ${scope.coroutineContext}")
+              log("userData in context: ${scope.coroutineContext[UserData].toString()}")
 
-        val context = Job() + Dispatchers.Default
-        log("contextCoroutine = $context")*/
+              val context = Job() + Dispatchers.Default
+              log("contextCoroutine = $context")*/
 
 /*        val job = scope.launch {
             Log.d(TAG, "scope = $this")
