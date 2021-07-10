@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
+import com.androidapp.containerprogect.exeption.TestCoroutineException
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 
 const val TAG = "TAG"
 
@@ -14,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private val testLaunchAsync = TestLaunchAsync()
     private val testCoroutineContext = TestCoroutineContext()
     private val testDispatchers = TestDispatchers()
+    private val testCoroutineExpectation = TestCoroutineException()
 
     private val scope = CoroutineScope(Job())
 
@@ -25,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         //testDispatchers.dispatcherDefault2()
         //testDispatchers.dispatcherUnconfined()
 
-        val job = scope.launch {
+        testCoroutineExpectation.onRunExample3()
+
+/*        val job = scope.launch {
             log("parent start")
             launch {
                 log("child start")
@@ -40,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             log("1 parent job is active: ${job.isActive}")
             delay(1000)
             log("2 parent job is active: ${job.isActive}")
-        }
+        }*/
 
         btn_run.setOnClickListener {
             //testLaunchAsync.onRun5()
