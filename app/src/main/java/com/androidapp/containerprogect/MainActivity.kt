@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 
 const val TAG = "TAG"
 
@@ -15,15 +15,32 @@ class MainActivity : AppCompatActivity() {
     private val testCoroutineContext = TestCoroutineContext()
     private val testDispatchers = TestDispatchers()
 
+    private val scope = CoroutineScope(Job())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         //testCoroutineContext.main()
-
         //testDispatchers.dispatcherDefault2()
-        testDispatchers.dispatcherUnconfined()
+        //testDispatchers.dispatcherUnconfined()
 
+        val job = scope.launch {
+            log("parent start")
+            launch {
+                log("child start")
+                delay(1000)
+                log("child end")
+            }
+            log("parent end")
+        }
+
+        scope.launch {
+            delay(500)
+            log("1 parent job is active: ${job.isActive}")
+            delay(1000)
+            log("2 parent job is active: ${job.isActive}")
+        }
 
         btn_run.setOnClickListener {
             //testLaunchAsync.onRun5()
