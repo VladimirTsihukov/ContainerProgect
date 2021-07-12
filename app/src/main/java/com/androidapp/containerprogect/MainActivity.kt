@@ -2,6 +2,7 @@ package com.androidapp.containerprogect
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.androidapp.containerprogect.channel.TestChannel
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val testDispatchers = TestDispatchers()
     private val testCoroutineExpectation = TestCoroutineException()
     private val testCoroutineScope = TestCoroutineScope()
-
+    private val testChannel = TestChannel()
     private val scope = CoroutineScope(Job())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +32,9 @@ class MainActivity : AppCompatActivity() {
         //testDispatchers.dispatcherDefault2()
         //testDispatchers.dispatcherUnconfined()
         //testCoroutineExpectation.onRunExample5()
+        //testCoroutineScope.onRun()
 
-        testCoroutineScope.onRun()
+        testChannel.onRun6()
 
 /*        val job = scope.launch {
             log("parent start")
