@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         //testDispatchers.dispatcherDefault2()
         //testDispatchers.dispatcherUnconfined()
 
-        testCoroutineExpectation.onRunExample3()
+        testCoroutineExpectation.onRunExample5()
 
 /*        val job = scope.launch {
             log("parent start")
