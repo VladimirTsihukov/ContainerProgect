@@ -7,6 +7,7 @@ import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import com.androidapp.containerprogect.exeption.TestCoroutineException
+import com.androidapp.containerprogect.flow.TestFlow
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val testCoroutineExpectation = TestCoroutineException()
     private val testCoroutineScope = TestCoroutineScope()
     private val testChannel = TestChannel()
+    private val testFlow = TestFlow()
     private val scope = CoroutineScope(Job())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +35,14 @@ class MainActivity : AppCompatActivity() {
         //testDispatchers.dispatcherUnconfined()
         //testCoroutineExpectation.onRunExample5()
         //testCoroutineScope.onRun()
+        //testChannel.onRun6()
 
-        testChannel.onRun6()
+/*        scope.launch {
+            testFlow.testFlow1()
+        }*/
+
+        val flow = testFlow.createFlow()
+        testFlow.collectFlow(flow)
 
 /*        val job = scope.launch {
             log("parent start")
