@@ -41,8 +41,10 @@ class MainActivity : AppCompatActivity() {
             testFlow.testFlow1()
         }*/
 
-        val flow = testFlow.createFlow()
-        testFlow.collectFlow(flow)
+/*        val flow = testFlow.createFlow()
+        testFlow.collectFlow(flow)*/
+
+        testFlow.myTerminalFlow()
 
 /*        val job = scope.launch {
             log("parent start")
