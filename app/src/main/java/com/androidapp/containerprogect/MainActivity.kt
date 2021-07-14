@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 
 const val TAG = "TAG"
 
@@ -44,7 +46,15 @@ class MainActivity : AppCompatActivity() {
 /*        val flow = testFlow.createFlow()
         testFlow.collectFlow(flow)*/
 
-        testFlow.myTerminalFlow()
+/*        scope.launch {
+            testFlow.channelFlow().collect {
+                log(it.toString())
+            }
+        }*/
+
+        scope.launch {
+          testFlow.testProduceIn().consumeEach { log(it.toString()) }
+        }
 
 /*        val job = scope.launch {
             log("parent start")

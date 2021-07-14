@@ -2,6 +2,8 @@ package com.androidapp.containerprogect.flow
 
 import com.androidapp.containerprogect.log
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.flow.*
 
 class TestFlow {
@@ -99,16 +101,97 @@ class TestFlow {
                 log(it)
             }
         }
-
-        /*  scope.launch {
-              flow {
-                  flowString.collect {
-                      emit(log(it.uppercase()))
-                  }
-              }.collect { }
-          }*/
     }
+
+    fun testFlow() = flow {
+        coroutineScope {
+            launch {
+                delay(1000)
+                emit(1)
+            }
+
+            launch {
+                delay(1000)
+                emit(2)
+            }
+
+            launch {
+                delay(1000)
+                emit(3)
+            }
+        }
+    }
+
+    fun createMyChannelFlow() = flow<Int> {
+        coroutineScope {
+            val channel = produce<Int> {
+                log("Start channel")
+                launch {
+                    delay(1000)
+                    send(1)
+                }
+
+                launch {
+                    delay(1000)
+                    send(2)
+                }
+
+                launch {
+                    delay(1000)
+                    send(3)
+                }
+            }
+            channel.consumeEach {
+                emit(it)
+            }
+        }
+    }
+
+    fun channelFlow() = channelFlow<Int> {
+        log("Start channelFlow")
+        launch {
+            delay(1000)
+            send(10)
+        }
+        launch {
+            delay(1000)
+            send(11)
+        }
+        launch {
+            delay(1000)
+            send(12)
+        }
+    }
+
+    fun testFlowOn() {
+        scope.launch {
+            flow {
+                for (i in 1..5) {
+                    log("Emit $i")
+                    emit(i)
+                }
+            }.map { it * 10 }
+                .flowOn(Dispatchers.IO)
+                .onEach {
+                    delay(500)
+                    log("onEach $it")
+                }
+                .flowOn(Dispatchers.Main)
+                .collect()
+        }
+    }
+
+    fun testProduceIn() = flow {
+            for (i in 1..20) {
+                emit(i)
+            }
+        }
+            .buffer(5)
+            .flowOn(Dispatchers.IO)
+            .produceIn(scope)
+
 }
+
 
 fun Flow<String>.toUpperCase(): Flow<String> = flow {
     collect {
