@@ -2,18 +2,17 @@ package com.androidapp.containerprogect
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.androidapp.containerprogect.channel.TestChannel
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import com.androidapp.containerprogect.exeption.TestCoroutineException
 import com.androidapp.containerprogect.flow.TestFlow
+import com.androidapp.containerprogect.scopeLiveData.TestScopeLiveData
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 const val TAG = "TAG"
 
@@ -28,75 +27,53 @@ class MainActivity : AppCompatActivity() {
     private val testFlow = TestFlow()
     private val scope = CoroutineScope(Job())
 
+    //private val viewModel: TestScopeLiveData by viewModels()
+    private lateinit var viewModel: TestScopeLiveData
+    private val mainScope = MainScope()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //testCoroutineContext.main()
-        //testDispatchers.dispatcherDefault2()
-        //testDispatchers.dispatcherUnconfined()
-        //testCoroutineExpectation.onRunExample5()
-        //testCoroutineScope.onRun()
-        //testChannel.onRun6()
+        log("Activity onCreate")
 
-/*        scope.launch {
-            testFlow.testFlow1()
-        }*/
+        //createLifecycleScope()
 
-/*        val flow = testFlow.createFlow()
-        testFlow.collectFlow(flow)*/
+        viewModel = ViewModelProvider(this).get(TestScopeLiveData::class.java)
 
-/*        scope.launch {
-            testFlow.channelFlow().collect {
-                log(it.toString())
-            }
-        }*/
+        viewModel.liveData.observe(this, {
+            log(it)
+        })
 
-        scope.launch {
-          testFlow.testProduceIn().consumeEach { log(it.toString()) }
-        }
+        viewModel.liveDataScope.observe(this, {
+            log(it)
+        })
 
-/*        val job = scope.launch {
-            log("parent start")
-            launch {
-                log("child start")
-                delay(1000)
-                log("child end")
-            }
-            log("parent end")
-        }
-
-        scope.launch {
-            delay(500)
-            log("1 parent job is active: ${job.isActive}")
-            delay(1000)
-            log("2 parent job is active: ${job.isActive}")
-        }*/
+        //viewModel.createViewModelScope()
 
         btn_run.setOnClickListener {
             //testLaunchAsync.onRun5()
+            log("btn_run")
         }
 
         btn_cancel.setOnClickListener {
             //testLaunchAsync.onCancel()
+            log("btn_cancel")
         }
 
         btn_run2.setOnClickListener {
             //testLaunchAsync.coroutineStart()
+            log("btn_run2")
         }
+    }
 
-        /*      val userData = UserData(1, "First userData", 31)
-              val scope = CoroutineScope(Dispatchers.Main + userData)
-              log("scope context: ${scope.coroutineContext}")
-              log("userData in context: ${scope.coroutineContext[UserData].toString()}")
-
-              val context = Job() + Dispatchers.Default
-              log("contextCoroutine = $context")*/
-
-/*        val job = scope.launch {
-            Log.d(TAG, "scope = $this")
+    private fun createLifecycleScope() {
+        lifecycleScope.launch {
+            while (true) {
+                delay(1000)
+                log("Work Activity")
+            }
         }
-        Log.d(TAG, "job = $job")*/
     }
 
 
