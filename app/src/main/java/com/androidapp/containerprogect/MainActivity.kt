@@ -2,14 +2,13 @@ package com.androidapp.containerprogect
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.androidapp.containerprogect.channel.TestChannel
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.coroutineRetrofit.MyViewModel
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
-import com.androidapp.containerprogect.exeption.TestCoroutineException
+import com.androidapp.containerprogect.exception.TestCoroutineException
 import com.androidapp.containerprogect.flow.TestFlow
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -35,11 +34,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
-        viewModel.getListMovie()
+        testCoroutineScope.onRun3()
+
+        //viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+       /* viewModel.getListMovie()
         viewModel.liveData.observe(this, {
             log("Movie size = ${it.results.size}")
-        })
+        })*/
 
         btn_run.setOnClickListener {
             //testLaunchAsync.onRun5()
