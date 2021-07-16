@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.androidapp.containerprogect.channel.TestChannel
 import com.androidapp.containerprogect.context.TestCoroutineContext
+import com.androidapp.containerprogect.coroutineRetrofit.MyViewModel
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import com.androidapp.containerprogect.exeption.TestCoroutineException
 import com.androidapp.containerprogect.flow.TestFlow
-import com.androidapp.containerprogect.scopeLiveData.TestScopeLiveData
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
@@ -28,28 +28,18 @@ class MainActivity : AppCompatActivity() {
     private val scope = CoroutineScope(Job())
 
     //private val viewModel: TestScopeLiveData by viewModels()
-    private lateinit var viewModel: TestScopeLiveData
+    private lateinit var viewModel: MyViewModel
     private val mainScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        log("Activity onCreate")
-
-        //createLifecycleScope()
-
-        viewModel = ViewModelProvider(this).get(TestScopeLiveData::class.java)
-
+        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+        viewModel.getListMovie()
         viewModel.liveData.observe(this, {
-            log(it)
+            log("Movie size = ${it.results.size}")
         })
-
-        viewModel.liveDataScope.observe(this, {
-            log(it)
-        })
-
-        //viewModel.createViewModelScope()
 
         btn_run.setOnClickListener {
             //testLaunchAsync.onRun5()

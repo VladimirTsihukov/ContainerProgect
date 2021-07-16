@@ -9,7 +9,7 @@ class TestScopeLiveData : ViewModel() {
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     private val _liveData = MutableLiveData<String>()
-    val  liveData = _liveData as LiveData<String>
+    var liveData = _liveData as LiveData<String>
 
     val liveDataScope = liveData<String> {
         while (true) {
