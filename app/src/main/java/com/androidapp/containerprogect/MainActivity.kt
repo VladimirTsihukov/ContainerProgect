@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.androidapp.containerprogect.channel.TestChannel
 import com.androidapp.containerprogect.context.TestCoroutineContext
+import com.androidapp.containerprogect.coroutineFlow.TestCoroutineSharedFlowAndStateFlow
 import com.androidapp.containerprogect.coroutineRetrofit.MyViewModel
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val testChannel = TestChannel()
     private val testFlow = TestFlow()
     private val scope = CoroutineScope(Job())
+    private val testStateFlow = TestCoroutineSharedFlowAndStateFlow()
 
     //private val viewModel: TestScopeLiveData by viewModels()
     private lateinit var viewModel: MyViewModel
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        testCoroutineScope.onRun3()
+        testStateFlow.differenceStateFlow()
 
         //viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
        /* viewModel.getListMovie()
