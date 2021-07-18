@@ -13,7 +13,7 @@ import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import com.androidapp.containerprogect.exception.TestCoroutineException
 import com.androidapp.containerprogect.flow.TestFlow
-import com.androidapp.containerprogect.testFlowAndView.ViewModelFlow
+import com.androidapp.containerprogect.testFlowAndView.ViewModelFlow2
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.resume
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val testStateFlow = TestCoroutineSharedFlowAndStateFlow()
 
     //private val viewModel: TestScopeLiveData by viewModels()
-    private val viewModel: ViewModelFlow by viewModels()
+    private val viewModel: ViewModelFlow2 by viewModels()
 
     //private lateinit var viewModel: MyViewModel
     private val mainScope = MainScope()
@@ -42,12 +42,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        editText.addTextChangedListener {
-            viewModel.search(it.toString())
+        editTextName.addTextChangedListener {
+            viewModel.setName(it.toString())
+        }
+        editTextAge.addTextChangedListener {
+            viewModel.setAge(it.toString())
         }
 
-        viewModel.liveData.observe(this, {
+        viewModel.dataIsValid.observe(this, {
             log("LiveData: $it")
+            btnTest.isEnabled = it
         })
 
 
@@ -59,10 +63,10 @@ class MainActivity : AppCompatActivity() {
         }*/
 
         //viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
-       /* viewModel.getListMovie()
-        viewModel.liveData.observe(this, {
-            log("Movie size = ${it.results.size}")
-        })*/
+        /* viewModel.getListMovie()
+         viewModel.liveData.observe(this, {
+             log("Movie size = ${it.results.size}")
+         })*/
 
         btn_run.setOnClickListener {
             //testLaunchAsync.onRun5()
@@ -101,7 +105,17 @@ suspend fun View.awaitLayoutChange() = suspendCancellableCoroutine<Unit> { cont 
 
     val listener = object : View.OnLayoutChangeListener {
 
-        override fun onLayoutChange(view: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+        override fun onLayoutChange(
+            view: View?,
+            left: Int,
+            top: Int,
+            right: Int,
+            bottom: Int,
+            oldLeft: Int,
+            oldTop: Int,
+            oldRight: Int,
+            oldBottom: Int
+        ) {
             view?.removeOnLayoutChangeListener(this)
             cont.resume(Unit)
         }
