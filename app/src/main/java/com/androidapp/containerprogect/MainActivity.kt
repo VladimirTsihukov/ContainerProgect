@@ -10,6 +10,7 @@ import com.androidapp.containerprogect.channel.TestChannel
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.coroutineFlow.TestCoroutineSharedFlowAndStateFlow
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
+import com.androidapp.containerprogect.coroutineSelect.TestCoroutineSelect
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import com.androidapp.containerprogect.exception.TestCoroutineException
 import com.androidapp.containerprogect.flow.TestFlow
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private val testFlow = TestFlow()
     private val scope = CoroutineScope(Job())
     private val testStateFlow = TestCoroutineSharedFlowAndStateFlow()
+    private val testCoroutineSelect = TestCoroutineSelect()
 
     //private val viewModel: TestScopeLiveData by viewModels()
     private val viewModel: ViewModelFlow2 by viewModels()
@@ -41,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        testCoroutineSelect.testSelect()
 
         editTextName.addTextChangedListener {
             viewModel.setName(it.toString())
