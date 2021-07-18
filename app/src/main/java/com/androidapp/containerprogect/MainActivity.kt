@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
+import com.androidapp.containerprogect.actor.TestActor
 import com.androidapp.containerprogect.channel.TestChannel
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.coroutineFlow.TestCoroutineSharedFlowAndStateFlow
@@ -14,7 +14,6 @@ import com.androidapp.containerprogect.coroutineSelect.TestCoroutineSelect
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import com.androidapp.containerprogect.exception.TestCoroutineException
 import com.androidapp.containerprogect.flow.TestFlow
-import com.androidapp.containerprogect.testFlowAndView.ViewModelFlow2
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.resume
@@ -35,7 +34,8 @@ class MainActivity : AppCompatActivity() {
     private val testCoroutineSelect = TestCoroutineSelect()
 
     //private val viewModel: TestScopeLiveData by viewModels()
-    private val viewModel: ViewModelFlow2 by viewModels()
+    //private val viewModel: ViewModelFlow2 by viewModels()
+    private val viewModel: TestActor by viewModels()
 
     //private lateinit var viewModel: MyViewModel
     private val mainScope = MainScope()
@@ -46,7 +46,12 @@ class MainActivity : AppCompatActivity() {
 
         testCoroutineSelect.testSelect()
 
-        editTextName.addTextChangedListener {
+        btn_test.setOnClickListener {
+            viewModel.onButtonClick()
+        }
+
+
+/*        editTextName.addTextChangedListener {
             viewModel.setName(it.toString())
         }
         editTextAge.addTextChangedListener {
@@ -56,8 +61,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.dataIsValid.observe(this, {
             log("LiveData: $it")
             btnTest.isEnabled = it
-        })
-
+        })*/
 
 /*        lifecycleScope.launch {
             btn_test.text = "New text"
