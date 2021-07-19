@@ -1,25 +1,29 @@
 package com.androidapp.containerprogect.utils
 
+import android.content.Context
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
+import androidx.core.content.ContextCompat
 import com.androidapp.containerprogect.R
 import com.androidapp.containerprogect.model.FeedTitle
 import com.androidapp.containerprogect.model.UserPost
 import kotlin.random.Random
 
-
-fun getRandomFeed() = List(10) {
+fun getRandomFeed(context: Context) = List(10) {
     when (it) {
         0 -> FeedTitle("Актуальное за сегодня:")
-        else -> getRandomUserPost()
+        else -> getRandomUserPost(context)
     }
 }
 
-fun getRandomUserPost() = UserPost(
+fun getRandomUserPost(context: Context) = UserPost(
     postId = Random.nextLong(),
-    userNickname = "User#${Random.nextInt()}",
-    text = commentsSamples.random(),
-    likesCount = Random.nextInt(0, 9999),
-    commentsCount = Random.nextInt(0, 9999),
-    imageResId = imagesIds.random(),
+    mainComment = getPostDescription("User#${Random.nextInt()}", commentsSamples.random()),
+    likesCount = Random.nextInt(0, 9999).toString(),
+    commentsCount = Random.nextInt(0, 9999).toString(),
+    image = ContextCompat.getDrawable(context, imagesIds.random())!!,
     isSaved = false,
 )
 
@@ -41,3 +45,13 @@ private val imagesIds = listOf(
     R.drawable.img_girl,
     R.drawable.img_praha,
 )
+
+private fun getPostDescription(nickName: String, comment: String) =
+    SpannableStringBuilder("$nickName $comment").apply {
+        setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            nickName.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
+    }
