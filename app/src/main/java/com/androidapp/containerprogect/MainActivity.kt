@@ -5,8 +5,8 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.androidapp.containerprogect.actor.TestActor
 import com.androidapp.containerprogect.channel.TestChannel
+import com.androidapp.containerprogect.concurrency.TestConcurrency
 import com.androidapp.containerprogect.context.TestCoroutineContext
 import com.androidapp.containerprogect.coroutineFlow.TestCoroutineSharedFlowAndStateFlow
 import com.androidapp.containerprogect.coroutineScope.TestCoroutineScope
@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     //private val viewModel: TestScopeLiveData by viewModels()
     //private val viewModel: ViewModelFlow2 by viewModels()
-    private val viewModel: TestActor by viewModels()
+    //private val viewModel: TestActor by viewModels()
+    private val viewModel: TestConcurrency by viewModels()
 
     //private lateinit var viewModel: MyViewModel
     private val mainScope = MainScope()
@@ -44,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        testCoroutineSelect.testSelect()
+        viewModel.test6()
 
         btn_test.setOnClickListener {
-            viewModel.onButtonClick()
+
         }
 
 
