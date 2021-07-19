@@ -38,6 +38,7 @@ class TitleViewHolder(
 ) : BaseViewHolder<ItemTitleBinding, FeedTitle>(binding) {
 
     override fun onBind(item: FeedTitle) {
+        super.onBind(item)
         binding.tvFeedTitle.text = item.title
     }
 

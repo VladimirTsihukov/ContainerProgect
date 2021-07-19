@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.R
 import com.androidapp.containerprogect.adapter.BaseViewHolder
 import com.androidapp.containerprogect.adapter.Item
@@ -11,7 +12,9 @@ import com.androidapp.containerprogect.adapter.ItemFingerprint
 import com.androidapp.containerprogect.databinding.ItemPostBinding
 import com.androidapp.containerprogect.model.UserPost
 
-class PostFingerprint : ItemFingerprint<ItemPostBinding, UserPost> {
+class PostFingerprint(
+    private val onSavePost: (UserPost) -> Unit
+) : ItemFingerprint<ItemPostBinding, UserPost> {
 
     override fun isRelativeItem(item: Item): Boolean = item is UserPost
 
@@ -22,7 +25,7 @@ class PostFingerprint : ItemFingerprint<ItemPostBinding, UserPost> {
         parent: ViewGroup
     ): BaseViewHolder<ItemPostBinding, UserPost> {
         val binding = ItemPostBinding.inflate(layoutInflater, parent, false)
-        return PostViewHolder(binding)
+        return PostViewHolder(binding, onSavePost)
     }
 
     override fun getDiffUtil(): DiffUtil.ItemCallback<UserPost> = diffUtil
@@ -37,15 +40,27 @@ class PostFingerprint : ItemFingerprint<ItemPostBinding, UserPost> {
 }
 
 class PostViewHolder(
-    binding: ItemPostBinding
+    binding: ItemPostBinding,
+    val onSavePost: (UserPost) -> Unit
 ) : BaseViewHolder<ItemPostBinding, UserPost>(binding) {
 
-    override fun onBind(item: UserPost) = with(binding) {
-        tvCommentCount.text = item.commentsCount
-        tvLikesCount.text = item.likesCount
-        tvTitle.text = item.mainComment
-        ivPostImage.setImageDrawable(item.image)
-        tbLike.setChecked(item.isSaved)
+    init {
+        binding.tbLike.setOnClickListener {
+            if (bindingAdapterPosition == RecyclerView.NO_POSITION) return@setOnClickListener
+            val newItem = item
+            onSavePost(newItem)
+        }
+    }
+
+    override fun onBind(item: UserPost) {
+        super.onBind(item)
+        with(binding) {
+            tvCommentCount.text = item.commentsCount
+            tvLikesCount.text = item.likesCount
+            tvTitle.text = item.mainComment
+            ivPostImage.setImageDrawable(item.image)
+            tbLike.setChecked(item.isSaved)
+        }
     }
 
     private fun ImageView.setChecked(isChecked: Boolean) {
