@@ -18,12 +18,13 @@ class GroupVerticalItemDecoration(
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        if (parent.getChildViewHolder(view).itemViewType != viewType) return
+        val chileViewHolder = parent.getChildViewHolder(view)
+        if (chileViewHolder.itemViewType != viewType) return
 
         val adapter = parent.adapter?: return
         val currentPosition = parent.getChildAdapterPosition(view).takeIf {
             it != RecyclerView.NO_POSITION
-        } ?: return
+        } ?: chileViewHolder.oldPosition
 
         val isPrevTargetView = adapter.isPrevTargetView(currentPosition, viewType)
         val isNextTargetView = adapter.isNextTargetView(currentPosition, viewType)

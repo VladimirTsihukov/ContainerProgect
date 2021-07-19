@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidapp.containerprogect.adapter.FingerprintAdapter
 import com.androidapp.containerprogect.adapter.Item
+import com.androidapp.containerprogect.adapter.animators.AddableItemAnimator
+import com.androidapp.containerprogect.adapter.animators.custom.SimpleCommonAnimator
+import com.androidapp.containerprogect.adapter.animators.custom.SlideInLeftCommonAnimator
+import com.androidapp.containerprogect.adapter.animators.custom.SlideInTopCommonAnimator
 import com.androidapp.containerprogect.adapter.decorations.FeedHorizontalDividerItemDecoration
 import com.androidapp.containerprogect.adapter.decorations.GroupVerticalItemDecoration
 import com.androidapp.containerprogect.adapter.fingerprint.PostFingerprint
@@ -34,9 +38,16 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(FeedHorizontalDividerItemDecoration(40))
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_post, 100, 0))
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_title, 0, 100))
-        }
 
-        adapter.submitList(feed.toList())
+            itemAnimator = AddableItemAnimator(SimpleCommonAnimator()).also {animator ->
+                animator.addViewTypeAnimation(R.layout.item_post, SlideInLeftCommonAnimator())
+                animator.addViewTypeAnimation(R.layout.item_title, SlideInTopCommonAnimator())
+                animator.addDuration = 500L
+                animator.removeDuration = 500L
+            }
+        }
+        submitInitialListWithDelayForAnimation()
+
     }
 
     private fun getFingerprints() = listOf(
@@ -51,5 +62,11 @@ class MainActivity : AppCompatActivity() {
         feed.removeAt(postIndex)
         feed.add(postIndex, newItem)
         adapter.submitList(feed.toList())
+    }
+
+    private fun submitInitialListWithDelayForAnimation() {
+        binding.recyclerView.postDelayed({
+            adapter.submitList(feed.toList())
+        }, 500L)
     }
 }
