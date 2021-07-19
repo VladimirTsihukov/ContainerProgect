@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidapp.containerprogect.adapter.FingerprintAdapter
+import com.androidapp.containerprogect.adapter.decorations.FeedHorizontalDividerItemDecoration
+import com.androidapp.containerprogect.adapter.decorations.GroupVerticalItemDecoration
 import com.androidapp.containerprogect.adapter.fingerprint.PostFingerprint
 import com.androidapp.containerprogect.adapter.fingerprint.TitleFingerprint
 import com.androidapp.containerprogect.databinding.ActivityMainBinding
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity() {
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = this@MainActivity.adapter
+
+            addItemDecoration(FeedHorizontalDividerItemDecoration(40))
+            addItemDecoration(GroupVerticalItemDecoration(R.layout.item_post, 100, 0))
+            addItemDecoration(GroupVerticalItemDecoration(R.layout.item_title, 0, 100))
         }
 
         adapter.setItem(getRandomFeed(this))
