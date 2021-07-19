@@ -1,9 +1,17 @@
 package com.androidapp.containerprogect.utils
 
 import com.androidapp.containerprogect.R
+import com.androidapp.containerprogect.model.FeedTitle
 import com.androidapp.containerprogect.model.UserPost
 import kotlin.random.Random
 
+
+fun getRandomFeed() = List(10) {
+    when (it) {
+        0 -> FeedTitle("Актуальное за сегодня:")
+        else -> getRandomUserPost()
+    }
+}
 
 fun getRandomUserPost() = UserPost(
     postId = Random.nextLong(),

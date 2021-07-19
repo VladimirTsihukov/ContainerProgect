@@ -1,6 +1,7 @@
 package com.androidapp.containerprogect.model
 
 import androidx.annotation.DrawableRes
+import com.androidapp.containerprogect.adapter.Item
 
 data class UserPost(
     val postId: Long,
@@ -11,4 +12,4 @@ data class UserPost(
     @DrawableRes
     val imageResId: Int,
     val isSaved: Boolean
-)
+) : Item
