@@ -3,6 +3,7 @@ package com.androidapp.containerprogect.adapter.fingerprint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
 import com.androidapp.containerprogect.R
 import com.androidapp.containerprogect.adapter.BaseViewHolder
 import com.androidapp.containerprogect.adapter.Item
@@ -22,6 +23,16 @@ class PostFingerprint : ItemFingerprint<ItemPostBinding, UserPost> {
     ): BaseViewHolder<ItemPostBinding, UserPost> {
         val binding = ItemPostBinding.inflate(layoutInflater, parent, false)
         return PostViewHolder(binding)
+    }
+
+    override fun getDiffUtil(): DiffUtil.ItemCallback<UserPost> = diffUtil
+
+    private val diffUtil = object : DiffUtil.ItemCallback<UserPost>() {
+        override fun areItemsTheSame(oldItem: UserPost, newItem: UserPost): Boolean =
+            oldItem.postId == newItem.postId
+
+        override fun areContentsTheSame(oldItem: UserPost, newItem: UserPost): Boolean =
+            oldItem == newItem
     }
 }
 

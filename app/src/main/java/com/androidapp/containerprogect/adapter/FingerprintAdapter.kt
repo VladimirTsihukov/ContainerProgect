@@ -2,6 +2,7 @@ package com.androidapp.containerprogect.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
@@ -9,7 +10,7 @@ class FingerprintAdapter(
     private val fingerprint: List<ItemFingerprint<*, *>>
 ) : RecyclerView.Adapter<BaseViewHolder<ViewBinding, Item>>() {
 
-    private val item = mutableListOf<Item>()
+    private val items = mutableListOf<Item>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,21 +24,24 @@ class FingerprintAdapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<ViewBinding, Item>, position: Int) {
-        holder.onBind(item[position])
+        holder.onBind(items[position])
     }
 
-    override fun getItemCount(): Int = item.size
+    override fun getItemCount(): Int = items.size
 
     override fun getItemViewType(position: Int): Int {
-        val item = item[position]
+        val item = items[position]
         return fingerprint.find { it.isRelativeItem(item) }
             ?.getLayoutId()
             ?: throw IllegalArgumentException("View type not found: $item")
     }
 
     fun setItem(newItem: List<Item>) {
-        item.clear()
-        item.addAll(newItem)
-        notifyDataSetChanged()
+        val newList = newItem.toList()
+        val fingerprintDiffUtil = FingerprintDiffUtil(fingerprint, items, newList)
+        val diffResult = DiffUtil.calculateDiff(fingerprintDiffUtil)
+        items.clear()
+        items.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 }
