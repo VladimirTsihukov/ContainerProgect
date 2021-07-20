@@ -7,16 +7,20 @@ import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import com.androidapp.containerprogect.R
-import com.androidapp.containerprogect.model.FeedTitle
+import com.androidapp.containerprogect.model.HorizontalItem
 import com.androidapp.containerprogect.model.UserPost
 import kotlin.random.Random
 
 fun getRandomFeed(context: Context) = MutableList(10) {
     when (it) {
-        0 -> FeedTitle("Актуальное за сегодня:")
+        2, 4, 6 -> getRandomHorizontalItems(context)
         else -> getRandomUserPost(context)
     }
 }
+
+fun getRandomHorizontalItems(context: Context) = HorizontalItem(
+    List(10){ getRandomUserPost(context)}
+)
 
 fun getRandomUserPost(context: Context) = UserPost(
     postId = Random.nextLong(),

@@ -40,7 +40,10 @@ class FingerprintAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val item = currentList[position]
-        return fingerprint.find { it.isRelativeItem(item) }
+        return fingerprint.find {
+            val result = it.isRelativeItem(item)
+            result
+        }
             ?.getLayoutId()
             ?: throw IllegalArgumentException("View type not found: $item")
     }

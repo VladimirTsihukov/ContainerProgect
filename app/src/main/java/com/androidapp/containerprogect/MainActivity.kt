@@ -14,6 +14,7 @@ import com.androidapp.containerprogect.adapter.animators.custom.SlideInLeftCommo
 import com.androidapp.containerprogect.adapter.animators.custom.SlideInTopCommonAnimator
 import com.androidapp.containerprogect.adapter.decorations.FeedHorizontalDividerItemDecoration
 import com.androidapp.containerprogect.adapter.decorations.GroupVerticalItemDecoration
+import com.androidapp.containerprogect.adapter.fingerprint.HorizontalItemsFingerprint
 import com.androidapp.containerprogect.adapter.fingerprint.PostFingerprint
 import com.androidapp.containerprogect.adapter.fingerprint.TitleFingerprint
 import com.androidapp.containerprogect.databinding.ActivityMainBinding
@@ -21,25 +22,31 @@ import com.androidapp.containerprogect.model.FeedTitle
 import com.androidapp.containerprogect.model.UserPost
 import com.androidapp.containerprogect.utils.SwipeToDelete
 import com.androidapp.containerprogect.utils.getRandomFeed
-import com.androidapp.containerprogect.utils.getRandomUserPost
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: FingerprintAdapter
-    private val feed: MutableList<Item> by lazy(LazyThreadSafetyMode.NONE) { getRandomFeed(this) }
 
     private val titleList: MutableList<Item> by lazy {
         MutableList(1){FeedTitle("Актуальное за сегодня:")}
     }
 
     private val postList: MutableList<Item> by lazy {
-        MutableList(10){ getRandomUserPost(this)}
+        getRandomFeed(this)
     }
 
     private val titleAdapter = FingerprintAdapter(listOf(TitleFingerprint()))
-    private val postAdapter = FingerprintAdapter(listOf(PostFingerprint(::onSavePost)))
+    private val postAdapter = FingerprintAdapter(
+        listOf(
+            PostFingerprint(::onSavePost),
+            HorizontalItemsFingerprint(
+                listOf(PostFingerprint(::onSavePost)),
+                70
+            )
+        )
+    )
 
     private val concatAdapter = ConcatAdapter(
         ConcatAdapter.Config.Builder ()
@@ -60,9 +67,10 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = concatAdapter
 
-            addItemDecoration(FeedHorizontalDividerItemDecoration(40))
+            addItemDecoration(FeedHorizontalDividerItemDecoration(70, listOf(R.layout.item_horizontal_list)))
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_post, 100, 0))
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_title, 0, 100))
+            addItemDecoration(GroupVerticalItemDecoration(R.layout.item_horizontal_list, 0, 150))
 
             itemAnimator = AddableItemAnimator(SimpleCommonAnimator()).also { animator ->
                 animator.addViewTypeAnimation(R.layout.item_post, SlideInLeftCommonAnimator())
