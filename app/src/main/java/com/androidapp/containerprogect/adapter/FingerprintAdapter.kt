@@ -38,6 +38,11 @@ class FingerprintAdapter(
         }
     }
 
+    override fun onViewDetachedFromWindow(holder: BaseViewHolder<ViewBinding, Item>) {
+        super.onViewDetachedFromWindow(holder)
+        holder.onViewDetached()
+    }
+
     override fun getItemViewType(position: Int): Int {
         val item = currentList[position]
         return fingerprint.find {

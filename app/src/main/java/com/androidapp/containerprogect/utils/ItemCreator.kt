@@ -13,7 +13,7 @@ import kotlin.random.Random
 
 fun getRandomFeed(context: Context) = MutableList(10) {
     when (it) {
-        2, 4, 6 -> getRandomHorizontalItems(context)
+        1, 2, 4, 6 -> getRandomHorizontalItems(context)
         else -> getRandomUserPost(context)
     }
 }
