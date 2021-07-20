@@ -19,7 +19,7 @@ class SwipeToDelete(
     ): Boolean = false // заглушка для перетаскивания
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        onItemDelete(viewHolder.absoluteAdapterPosition)
+        onItemDelete(viewHolder.bindingAdapterPosition)     //bindingAdapterPosition - указывает позицию в конкретном адаптере
     }
 
     override fun getSwipeDirs(
