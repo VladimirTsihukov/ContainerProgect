@@ -13,7 +13,8 @@ import com.androidapp.containerprogect.databinding.ItemPostBinding
 import com.androidapp.containerprogect.model.UserPost
 
 class PostFingerprint(
-    private val onSavePost: (UserPost) -> Unit
+    private val onSavePost: (UserPost) -> Unit,
+    private val itemWidth: Int? = null
 ) : ItemFingerprint<ItemPostBinding, UserPost> {
 
     override fun isRelativeItem(item: Item): Boolean = item is UserPost
@@ -25,6 +26,9 @@ class PostFingerprint(
         parent: ViewGroup
     ): BaseViewHolder<ItemPostBinding, UserPost> {
         val binding = ItemPostBinding.inflate(layoutInflater, parent, false)
+        binding.root.layoutParams = binding.root.layoutParams.also {
+            it.width = itemWidth ?: it.width
+        }
         return PostViewHolder(binding, onSavePost)
     }
 
