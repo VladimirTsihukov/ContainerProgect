@@ -3,6 +3,7 @@ package com.androidapp.containerprogect
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidapp.containerprogect.adapter.FingerprintAdapter
 import com.androidapp.containerprogect.adapter.Item
@@ -16,7 +17,9 @@ import com.androidapp.containerprogect.adapter.fingerprint.PostFingerprint
 import com.androidapp.containerprogect.adapter.fingerprint.TitleFingerprint
 import com.androidapp.containerprogect.databinding.ActivityMainBinding
 import com.androidapp.containerprogect.model.UserPost
+import com.androidapp.containerprogect.utils.SwipeToDelete
 import com.androidapp.containerprogect.utils.getRandomFeed
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,15 +42,16 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_post, 100, 0))
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_title, 0, 100))
 
-            itemAnimator = AddableItemAnimator(SimpleCommonAnimator()).also {animator ->
+            itemAnimator = AddableItemAnimator(SimpleCommonAnimator()).also { animator ->
                 animator.addViewTypeAnimation(R.layout.item_post, SlideInLeftCommonAnimator())
                 animator.addViewTypeAnimation(R.layout.item_title, SlideInTopCommonAnimator())
                 animator.addDuration = 500L
                 animator.removeDuration = 500L
             }
         }
-        submitInitialListWithDelayForAnimation()
 
+        initSwipeToDelete()
+        submitInitialListWithDelayForAnimation()
     }
 
     private fun getFingerprints() = listOf(
@@ -67,6 +71,27 @@ class MainActivity : AppCompatActivity() {
     private fun submitInitialListWithDelayForAnimation() {
         binding.recyclerView.postDelayed({
             adapter.submitList(feed.toList())
-        }, 500L)
+        }, 300L)
+    }
+
+    private fun initSwipeToDelete() {
+        val onItemSwipeToDelete = { positionForRemote: Int ->
+            val removedItem = feed[positionForRemote]
+            feed.removeAt(positionForRemote)
+            adapter.submitList(feed.toList())
+
+            showRestoreItemSnackbar(positionForRemote, removedItem)
+        }
+
+        val swipeToDeleteCallback = SwipeToDelete(onItemSwipeToDelete)
+        ItemTouchHelper(swipeToDeleteCallback).attachToRecyclerView(binding.recyclerView)
+    }
+
+    private fun showRestoreItemSnackbar(position: Int, item: Item) {
+        Snackbar.make(binding.recyclerView, "Item was delete", Snackbar.LENGTH_LONG)
+            .setAction("Undo") {
+                feed.add(position, item)
+                adapter.submitList(feed.toList())
+            }.show()
     }
 }
