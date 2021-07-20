@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.adapter.FingerprintAdapter
 import com.androidapp.containerprogect.adapter.Item
 import com.androidapp.containerprogect.adapter.animators.AddableItemAnimator
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity() {
             PostFingerprint(::onSavePost),
             HorizontalItemsFingerprint(
                 listOf(PostFingerprint(::onSavePost, 800)),
-                70
+                70,
+                RecyclerView.RecycledViewPool()
             )
         )
     )
@@ -80,6 +82,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //state будет востанавливаться только тогда когда список будет не пустой
+        postAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
         initSwipeToDelete()
         submitInitialListWithDelayForAnimation()
     }
@@ -102,6 +107,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.postDelayed({
             titleAdapter.submitList(titleList.toList())
             postAdapter.submitList(postList.toList())
+            postAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
         }, 300L)
     }
 

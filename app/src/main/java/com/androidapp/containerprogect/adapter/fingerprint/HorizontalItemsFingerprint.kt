@@ -18,6 +18,7 @@ import com.androidapp.containerprogect.model.HorizontalItem
 class HorizontalItemsFingerprint(
     private val fingerprintList: List<ItemFingerprint<*, *>>,
     private val outerDivider: Int,
+    private val viewPool: RecyclerView.RecycledViewPool,
 ) : ItemFingerprint<ItemHorizontalListBinding, HorizontalItem> {
 
     override fun isRelativeItem(item: Item): Boolean = item is HorizontalItem
@@ -29,7 +30,7 @@ class HorizontalItemsFingerprint(
         parent: ViewGroup
     ): BaseViewHolder<ItemHorizontalListBinding, HorizontalItem> {
         val binding = ItemHorizontalListBinding.inflate(layoutInflater)
-        return HorizontalItemsHolder(binding, fingerprintList, outerDivider)
+        return HorizontalItemsHolder(binding, fingerprintList,viewPool, outerDivider)
     }
 
     override fun getDiffUtil(): DiffUtil.ItemCallback<HorizontalItem> = diffUtil
@@ -46,6 +47,7 @@ class HorizontalItemsFingerprint(
 class HorizontalItemsHolder(
     binding: ItemHorizontalListBinding,
     fingerprints: List<ItemFingerprint<*, *>>,
+    viewPool: RecyclerView.RecycledViewPool,
     outerDivider: Int,
 ) : BaseViewHolder<ItemHorizontalListBinding, HorizontalItem>(binding) {
 
@@ -54,7 +56,10 @@ class HorizontalItemsHolder(
     init {
         with(binding.rvHorizontalItems) {
             adapter = fingerprintAdapter
-            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false).also {
+                it.initialPrefetchItemCount = 4
+            }
+            setRecycledViewPool(viewPool)
             addItemDecoration(HorizontalDividerDecoration(50, outerDivider))
         }
     }
