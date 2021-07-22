@@ -14,6 +14,9 @@
         <variable
             name="department"
             type="com.androidapp.containerprogect.ex_01_basics.Department" />
+        <variable
+            name="handler"
+            type="com.androidapp.containerprogect.ex_02_click.MyHandler" />
     </data>
 
     <LinearLayout
@@ -39,6 +42,27 @@
             android:visibility="@{TextUtils.isEmpty(String.valueOf(employee.salary)) ? View.GONE : View.VISIBLE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_gravity="center"
+            android:text="@string/delete"
+            android:onClick="@{handler::onDelete}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_gravity="center"
+            android:text="@string/employee"
+            android:onClick="@{(view) -> handler.getEmployee(employee)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:layout_gravity="center"
+            android:text="@string/enable"
+            android:onCheckedChanged="@{(view, checked) -> handler.onEnabled(employee, checked)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </layout>
