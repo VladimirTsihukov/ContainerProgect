@@ -3,46 +3,29 @@ package com.androidapp.containerprogect
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.androidapp.containerprogect.ex_01_lifecycle.MyServer
+import com.androidapp.containerprogect.ex_02_liveData.MyViewModel
 
 const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
     private val server = MyServer()
+    private lateinit var viewModel: MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getLog("State onCreate = ${lifecycle.currentState}")
         lifecycle.addObserver(server)
-    }
 
-    override fun onStart() {
-        super.onStart()
-        getLog("State onStart = ${lifecycle.currentState}")
-    }
+        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
-    override fun onResume() {
-        super.onResume()
-        getLog("State onResume = ${lifecycle.currentState}")
+        viewModel.liveData.observe(this, {
+            getLog("LiveData = $it")
+        })
     }
-
-    override fun onPause() {
-        super.onPause()
-        getLog("State onPause = ${lifecycle.currentState}")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        getLog("State onStop = ${lifecycle.currentState}")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        getLog("State onDestroy = ${lifecycle.currentState}")
-    }
-
 }
 
 fun getLog(text: String) {
