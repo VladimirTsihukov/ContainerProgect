@@ -22,8 +22,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
-        viewModel.liveData.observe(this, {
-            getLog("LiveData = $it")
+        viewModel.mediatorLiveData.observe(this, {
+            it?.let {
+                getLog("MediatorLiveData = $it")
+            }
         })
     }
 }
