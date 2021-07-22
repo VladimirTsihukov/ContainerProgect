@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+
         <variable
             name="employee"
             type="com.androidapp.containerprogect.ex_01_basics.Employee" />
+
+        <variable
+            name="department"
+            type="com.androidapp.containerprogect.ex_01_basics.Department" />
     </data>
 
     <LinearLayout
@@ -14,12 +22,21 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@{employee.name}"
+            android:text='@{employee.name + (department == null ? " (" + department.name + ")" : "")}'
+            tools:text="Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:text="@{employee.address}"
+            android:text="@{TextUtils.isEmpty(employee.name) ? employee.address : @string/empty_address}"
+            tools:text="Address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@{String.valueOf(employee.salary)}"
+            tools:text="Salary"
+            android:visibility="@{TextUtils.isEmpty(String.valueOf(employee.salary)) ? View.GONE : View.VISIBLE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
