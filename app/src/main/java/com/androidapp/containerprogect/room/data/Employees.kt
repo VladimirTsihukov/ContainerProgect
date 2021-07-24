@@ -1,5 +1,6 @@
 package com.androidapp.containerprogect.room.data
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,6 +11,6 @@ data class Employees(
     val id : Long = 0,
     val name: String,
     val salary: Int,
-/*    @Embedded(prefix = "address")
-    val address: Address,*/
+    @Embedded(prefix = "address")
+    val address: Address,
 )

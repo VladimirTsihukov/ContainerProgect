@@ -3,6 +3,7 @@ package com.androidapp.containerprogect
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.androidapp.containerprogect.room.data.Address
 import com.androidapp.containerprogect.room.data.Employees
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -16,16 +17,23 @@ class MainActivity : AppCompatActivity() {
         getLogError(throwable.message.toString())
     }
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main + handler)
+    private var numberAddress = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         btn_save.setOnClickListener {
+            numberAddress++
             val name = edit_text_name.text.toString()
             val salary = edit_text_salary.text.toString().run { toIntOrNull() ?: 0 }
+            val addressDb = Address(
+                city = "City $numberAddress",
+                street = "Street $numberAddress",
+                number = numberAddress
+            )
             scope.launch {
-                db.employees().insert(Employees(name = name, salary = salary))
+                db.employees().insert(Employees(name = name, salary = salary, address = addressDb))
                 edit_text_name.text?.clear()
                 edit_text_salary.text?.clear()
             }
