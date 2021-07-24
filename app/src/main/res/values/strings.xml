@@ -4,4 +4,6 @@
     <string name="enter_salary">Enter salary</string>
     <string name="save_employees">Save employees</string>
     <string name="select_employees">Select employees</string>
+    <string name="enter_car">Enter car</string>
+    <string name="save_employee_end_car">Save employee end car</string>
 </resources>

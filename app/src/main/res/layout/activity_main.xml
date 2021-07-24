@@ -21,13 +21,28 @@
         android:hint="@string/enter_salary"
         android:inputType="number" />
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_car" />
+
     <Button
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:text="@string/save_employees"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_save_employee_and_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="@string/save_employee_end_car"
         android:textAllCaps="false" />
 
     <Button
@@ -35,8 +50,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:text="@string/select_employees"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_select_employee_and_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="Select employee and car"
         android:textAllCaps="false" />
 
     <TextView

@@ -20,4 +20,5 @@ interface DaoEmployee {
 
     @Delete
     suspend fun delete(employees: Employees)
+
 }
