@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ContainerProgect</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_salary">Enter salary</string>
+    <string name="save_employees">Save employees</string>
+    <string name="select_employees">Select employees</string>
 </resources>
