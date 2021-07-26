@@ -60,7 +60,25 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:text="Select employee and car"
+        android:text="@string/select_employee_and_car"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_select_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="@string/select_name"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_test_relation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="@string/test_relation"
         android:textAllCaps="false" />
 
     <TextView

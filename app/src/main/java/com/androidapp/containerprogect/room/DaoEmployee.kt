@@ -2,6 +2,7 @@ package com.androidapp.containerprogect.room
 
 import androidx.room.*
 import com.androidapp.containerprogect.room.data.Employees
+import com.androidapp.containerprogect.room.data.Name
 
 @Dao
 interface DaoEmployee {
@@ -12,8 +13,14 @@ interface DaoEmployee {
     @Query("SELECT * FROM employees WHERE id = :id")
     suspend fun getById(id: Long) : Employees
 
+    @Query("SELECT first_name, last_name FROM employees")
+    suspend fun getAllName(): List<Name>
+
     @Insert
     suspend fun insert(employees: Employees)
+
+    @Insert
+    suspend fun insertList(employeesList: List<Employees>)
 
     @Update
     suspend fun update(employees: Employees)

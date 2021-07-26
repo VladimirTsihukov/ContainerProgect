@@ -6,4 +6,7 @@
     <string name="select_employees">Select employees</string>
     <string name="enter_car">Enter car</string>
     <string name="save_employee_end_car">Save employee end car</string>
+    <string name="select_employee_and_car">Select employee and car</string>
+    <string name="select_name">Select name</string>
+    <string name="test_relation">Test relation</string>
 </resources>
