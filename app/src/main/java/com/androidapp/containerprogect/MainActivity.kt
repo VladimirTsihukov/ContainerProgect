@@ -1,11 +1,14 @@
 package com.androidapp.containerprogect
 
-import android.graphics.Color
-import android.graphics.Typeface
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.*
 import android.view.View
@@ -14,6 +17,7 @@ import android.widget.Toast.makeText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.scale
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -109,5 +113,98 @@ class MainActivity : AppCompatActivity() {
         spannableBullet.setSpan(BulletSpan(40, Color.GREEN, 15), 21, spannableBullet.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         text_under_bullet.text = spannableBullet
 
+        //QuoteSpan
+        val strQuoteSpan = "Первое предложение цитаты\nВторое предложнеие цитаты".toSpannable()
+        strQuoteSpan.setSpan(QuoteSpan(Color.RED), 0, 0,0)
+        text_under_quote_span.text = strQuoteSpan
+
+        //AlignmentSpan
+        val testAlignmentSpan = "Первое предложени\nВторое предложение\nТретье предложение".toSpannable()
+        testAlignmentSpan[0..18] = AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER)
+        testAlignmentSpan[0..18] = ForegroundColorSpan(Color.RED)
+
+        testAlignmentSpan[18..37] = AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL)
+        testAlignmentSpan[18..37] = ForegroundColorSpan(Color.GREEN)
+
+        testAlignmentSpan[37..testAlignmentSpan.length] = AlignmentSpan.Standard(Layout.Alignment.ALIGN_OPPOSITE)
+        testAlignmentSpan[37..testAlignmentSpan.length] = ForegroundColorSpan(Color.BLUE)
+
+        text_alignment_span.text = testAlignmentSpan
+
+        //ImageSpan
+        val textImageSpan = "Картинка между словами".toSpannable()
+        textImageSpan[8..9] = ImageSpan(this, R.drawable.ic_baseline_adb_24)
+        text_image_span.text = textImageSpan
+
+        //DynamicDrawableSpan
+        val textDynamic = "Какой-то длинный текст про кота Ваську, который слушает даест.".toSpannable()
+        textDynamic[(textDynamic.length - 1)..textDynamic.length] = object : DynamicDrawableSpan() {
+            override fun getDrawable(): Drawable? {
+                val drawable = getDrawable(R.drawable.ic_baseline_adb_24)
+                drawable?.setBounds(
+                    0,
+                    0,
+                    drawable.intrinsicWidth,
+                    drawable.intrinsicHeight
+                )
+                return drawable
+            }
+        }
+        text_dynamic_icon.text = textDynamic
+
+        //IconMarginSpan
+        val textIconMarginSpan = ("Здесь находится длинный текст про замечательных котиков, " +
+                "которые помогают изучать программирование").toSpannable()
+
+        val iconBitmap = resources.getDrawable(R.drawable.ic_baseline_bug_report_24).toBitmap()
+        iconBitmap.scale(iconBitmap.width/4, iconBitmap.height/4, true)
+        textIconMarginSpan[0..10] = IconMarginSpan(iconBitmap, 10)
+        text_margin_icon.text = textIconMarginSpan
+
+        //TextAppearanceSpan
+        val textAppearance = "Первая строка предложения\nВторая строка\nТретья строка".toSpannable()
+        textAppearance[26..40] = TextAppearanceSpan(this, R.style.SpecialTextAppearance)
+        text_appearance_span.text = textAppearance
+
+        //MaskFilterSpan
+        val textMaksFiltter = ("MaskFilterSpan Blur Normal." +
+                "\nMaskFilterSpan Blur Inner." +
+                "\nMaskFilterSpan Blur Outer." +
+                "\nMaskFilterSpan Blur Solid.").toSpannable()
+        textMaksFiltter[0..27] = MaskFilterSpan(BlurMaskFilter(5F, BlurMaskFilter.Blur.NORMAL))
+        textMaksFiltter[28..56] = MaskFilterSpan(BlurMaskFilter(15F, BlurMaskFilter.Blur.INNER))
+        textMaksFiltter[57..83] = MaskFilterSpan(BlurMaskFilter(5F, BlurMaskFilter.Blur.OUTER))
+        textMaksFiltter[83..textMaksFiltter.length] = MaskFilterSpan(BlurMaskFilter(5F, BlurMaskFilter.Blur.SOLID))
+        text_max_filter.text = textMaksFiltter
+
+        //LeadingMarginSpan
+        val textLeadingMarginSpan = ("Первая очень длинная строка про кота Ваську."
+                + "\n\nВторая длинная строка про кота Барсика."
+                + "\n\nТретья длинная строка про кота Мурзика."
+                + "\n\nЧетвёртная длинная строка про наглого кота Рыжика."
+                ).toSpannable()
+        textLeadingMarginSpan[0..textLeadingMarginSpan.length] = LeadingMarginSpan.Standard(100, 50)
+
+        text_leading_margin_span.text = textLeadingMarginSpan
+
+        //SpannableStringBuilder
+        val testStrBuilder = SpannableStringBuilder("Котёнок")
+        testStrBuilder[1..4] = ForegroundColorSpan(Color.RED)
+        testStrBuilder.insert(1, "Z")
+        testStrBuilder.insert(5, "W")
+        text_string_builder.text = testStrBuilder
     }
+}
+
+fun Drawable.toBitmap(): Bitmap {
+    if (this is BitmapDrawable) {
+        return this.bitmap
+    }
+
+    val bitmap = Bitmap.createBitmap(this.intrinsicWidth, this.intrinsicHeight, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    this.setBounds(0, 0, canvas.width, canvas.height)
+    this.draw(canvas)
+
+    return bitmap
 }
