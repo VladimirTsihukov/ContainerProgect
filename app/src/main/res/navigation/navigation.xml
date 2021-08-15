@@ -13,8 +13,7 @@
         <action
             android:id="@+id/action_fragment1_to_fragment2"
             app:destination="@id/fragment2"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/fragment1" />
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/fragment2"
@@ -24,29 +23,42 @@
         <action
             android:id="@+id/action_fragment2_to_fragment3"
             app:destination="@id/fragment3"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/fragment2" />
+            app:enterAnim="@android:anim/slide_in_left" />
         <action
             android:id="@+id/action_fragment2_to_fragment1"
             app:destination="@id/fragment1"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:launchSingleTop="true"
             app:popUpTo="@id/navigation" />
     </fragment>
     <fragment
         android:id="@+id/fragment3"
         android:name="com.androidapp.containerprogect.fragment.Fragment3"
         tools:layout="@layout/fragment_3"
-        android:label="Fragment3" >
+        android:label="Fragment3">
         <action
             android:id="@+id/action_fragment3_to_fragment2"
             app:destination="@id/fragment2"
-            app:launchSingleTop="false" />
+            app:enterAnim="@android:anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation" />
         <action
             android:id="@+id/action_fragment3_to_mainActivity2"
-            app:destination="@id/mainActivity2" />
+            app:destination="@id/mainActivity2"
+            app:enterAnim="@android:anim/slide_in_left" />
+        <argument
+            android:name="arg2"
+            android:defaultValue='"Default value"'
+            app:argType="string" />
     </fragment>
     <activity
         android:id="@+id/mainActivity2"
         android:name="com.androidapp.containerprogect.MainActivity2"
         android:label="activity_main2"
-        tools:layout="@layout/activity_main2" />
+        tools:layout="@layout/activity_main2" >
+        <argument
+            android:name="activity2"
+            app:argType="string"
+            android:defaultValue="Activity 2" />
+    </activity>
 </navigation>

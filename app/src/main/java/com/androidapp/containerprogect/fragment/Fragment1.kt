@@ -22,7 +22,9 @@ class Fragment1 : Fragment(R.layout.fragment_1) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_fragment_1_next.setOnClickListener {
-            viewNavController?.getNavController()?.navigate(R.id.action_fragment1_to_fragment2)
+            val bundle = Bundle()
+            bundle.putString("Fragment1", "Текст из Fragment 1")
+            viewNavController?.getNavController()?.navigate(R.id.action_fragment1_to_fragment2, bundle)
         }
         btn_fragment_1_back.setOnClickListener {
             activity?.onBackPressed()

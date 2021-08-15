@@ -21,8 +21,16 @@ class Fragment3 : Fragment(R.layout.fragment_3) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val dataArg2 = arguments?.getString("arg2")
+        dataArg2?.let {
+            tv_fragment_3.text = dataArg2
+        }
+
         btn_fragment_3_next.setOnClickListener {
-            viewNavController?.getNavController()?.navigate(R.id.action_fragment3_to_mainActivity2)
+            val bundle = Bundle()
+            bundle.getString("Fragment3", "Text from Fragment 3")
+            viewNavController?.getNavController()?.navigate(R.id.action_fragment3_to_mainActivity2, bundle)
         }
         btn_fragment_3_back.setOnClickListener {
             viewNavController?.getNavController()?.navigate(R.id.action_fragment3_to_fragment2)

@@ -12,7 +12,8 @@
         android:label="Fragment4" >
         <action
             android:id="@+id/action_fragment4_to_fragment5"
-            app:destination="@id/fragment5" />
+            app:destination="@id/fragment5"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/fragment5"
