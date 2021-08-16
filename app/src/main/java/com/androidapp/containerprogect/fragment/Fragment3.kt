@@ -30,6 +30,8 @@ class Fragment3 : Fragment(R.layout.fragment_3) {
         btn_fragment_3_next.setOnClickListener {
             val bundle = Bundle()
             bundle.getString("Fragment3", "Text from Fragment 3")
+/*            val data = ImportFragmentDirections.edit("New Data")
+            viewNavController?.getNavController()?.navigate(data)*/
             viewNavController?.getNavController()?.navigate(R.id.action_fragment3_to_mainActivity2, bundle)
         }
         btn_fragment_3_back.setOnClickListener {
