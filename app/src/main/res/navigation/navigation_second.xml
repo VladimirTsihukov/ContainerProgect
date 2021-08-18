@@ -20,10 +20,6 @@
         android:name="com.androidapp.containerprogect.fragment.Fragment5"
         tools:layout="@layout/fragment_5"
         android:label="Fragment5" >
-        <argument
-            android:name="product_id"
-            app:argType="integer" />
-
         <action
             android:id="@+id/action_fragment5_to_fragment4"
             app:destination="@id/fragment4" />

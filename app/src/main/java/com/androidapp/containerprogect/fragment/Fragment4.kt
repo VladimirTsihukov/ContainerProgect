@@ -11,20 +11,24 @@ import kotlinx.android.synthetic.main.fragment_4.*
 class Fragment4 : Fragment(R.layout.fragment_4) {
 
     private var viewNavController: RootViewNavController? = null
+    private var data: Int = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity?.let {
             viewNavController = it as RootViewNavController
         }
+
+        data = activity?.intent?.extras?.getInt("product_id", 0)!!
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val data = arguments?.getString("arg4")
-        data?.let {
-            tv_fragment_4.text = it
+
+        data.let {
+            tv_fragment_4.text = it.toString()
         }
 
         btn_fragment_4_next.setOnClickListener {

@@ -27,11 +27,11 @@ class Fragment3 : Fragment(R.layout.fragment_3) {
             tv_fragment_3.text = dataArg2
         }
 
+        val test = Fragment4Directions.actionFragment4ToFragment5()
+
         btn_fragment_3_next.setOnClickListener {
             val bundle = Bundle()
-            bundle.getString("Fragment3", "Text from Fragment 3")
-/*            val data = ImportFragmentDirections.edit("New Data")
-            viewNavController?.getNavController()?.navigate(data)*/
+            bundle.putInt("product_id", 325)
             viewNavController?.getNavController()?.navigate(R.id.action_fragment3_to_mainActivity2, bundle)
         }
         btn_fragment_3_back.setOnClickListener {

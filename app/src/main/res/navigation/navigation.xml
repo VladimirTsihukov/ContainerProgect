@@ -46,9 +46,6 @@
             android:id="@+id/action_fragment3_to_mainActivity2"
             app:destination="@id/mainActivity2"
             app:enterAnim="@android:anim/slide_in_left" >
-            <argument
-                android:name="product_id"
-                app:argType="integer" />
         </action>
         <argument
             android:name="arg2"
