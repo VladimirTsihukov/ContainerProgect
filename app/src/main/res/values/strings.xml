@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ContainerProgect</string>
+
+    <string name="simple_json">"{\"results\":{\"sitename\":\"Освой Android играючи\", \"url\":"\""http://developer.alexanderklimov.ru/android/\""}}"</string>
+
+    <string name="simple_json2">"{\"results\":{\"sitename\":\"Освой Android играючи\",
+    \"url\":"\""http://developer.alexanderklimov.ru/android/\",
+    \"array\":[{\"element\":\"Элемент 1\"}, {\"element\":\"Элемент 2\"}, {\"element\":\"Элемент 3\"}]}}"</string>
 </resources>
