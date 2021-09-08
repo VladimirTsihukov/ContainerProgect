@@ -37,6 +37,12 @@ class Fragment3 : Fragment(R.layout.fragment_3) {
         btn_fragment_3_back.setOnClickListener {
             viewNavController?.getNavController()?.navigate(R.id.action_fragment3_to_fragment2)
         }
+
+        btn_fragment_to_activity_3.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("Fragment3", "Activity 3 from Fragment 3")
+            viewNavController?.getNavController()?.navigate(R.id.action_fragment3_to_mainActivity3, bundle)
+        }
     }
 
 }
