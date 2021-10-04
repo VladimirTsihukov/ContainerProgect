@@ -1,6 +1,7 @@
 package com.androidapp.containerprogect
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,8 +15,10 @@ import com.androidapp.containerprogect.coroutineSelect.TestCoroutineSelect
 import com.androidapp.containerprogect.dispatchers.TestDispatchers
 import com.androidapp.containerprogect.exception.TestCoroutineException
 import com.androidapp.containerprogect.flow.TestFlow
+import com.androidapp.containerprogect.lesson_21_builds.Lesson21BuildsFlow
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import kotlin.coroutines.resume
 
 const val TAG = "TAG"
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     private val testStateFlow = TestCoroutineSharedFlowAndStateFlow()
     private val testCoroutineSelect = TestCoroutineSelect()
 
+    private val lesson21BuildsFlow = Lesson21BuildsFlow()
+
     //private val viewModel: TestScopeLiveData by viewModels()
     //private val viewModel: ViewModelFlow2 by viewModels()
     //private val viewModel: TestActor by viewModels()
@@ -44,6 +49,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        mainScope.launch {
+    /*        lesson21BuildsFlow.createFlow().collect {
+                Log.i(TAG, it)
+            }
+
+            lesson21BuildsFlow.createAsFlow().collect {
+                Log.i(TAG, "$it")
+            }
+
+            val count = lesson21BuildsFlow.createFlowTerminalFlow()
+            Log.i(TAG, "count = $count")*/
+
+            lesson21BuildsFlow.createAsynchronousChannelFlow().collect {
+                Log.i(TAG, "Test: $it")
+            }
+        }
 
         viewModel.test6()
 
