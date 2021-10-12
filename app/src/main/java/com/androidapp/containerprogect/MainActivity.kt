@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.recycler.OnListenerClickListener
+import com.androidapp.containerprogect.recycler.adapter.ItemTouchHelperCallback
 import com.androidapp.containerprogect.recycler.adapter.PlanetsAdapter
 import com.androidapp.containerprogect.recycler.data.DataPlanet
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         res_activity_fab.setOnClickListener {
             adapter.appendItem()
         }
+
+        ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(recycler)
     }
 
     private val click = object : OnListenerClickListener {

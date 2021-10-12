@@ -1,6 +1,7 @@
 package com.androidapp.containerprogect.recycler.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.activiry_recycler_item_earth.view.*
 import kotlinx.android.synthetic.main.activiry_recycler_item_mars.view.*
 
 class PlanetsAdapter(private val click: OnListenerClickListener) :
-    RecyclerView.Adapter<BaseViewHolder>() {
+    RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
 
     var listData = mutableListOf<Pair<DataPlanet, Boolean>>()
     set(value) {
@@ -53,9 +54,23 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
         return DataPlanet(id = ID++, name = PLANET_MARS)
     }
 
+    //перетаскиваем item
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        listData.removeAt(fromPosition).apply {
+            listData.add(if (toPosition > fromPosition) toPosition - 1 else toPosition, this)
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    //удаляем элемент по свайпу
+    override fun itemDismiss(position: Int) {
+        listData.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////
 
-   inner class MarsHolder(private val view: View) : BaseViewHolder(view) {
+   inner class MarsHolder(private val view: View) : BaseViewHolder(view), ItemTouchHelperViewHolder {
        @SuppressLint("SetTextI18n")
        override fun bind(data: Pair<DataPlanet, Boolean>) {
            view.marsTextView.text = "${data.first.name} - ${data.first.id}"
@@ -105,6 +120,14 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
                }
                notifyItemMoved(position, position + 1)
            }
+       }
+
+       override fun onItemSelected() {
+           itemView.setBackgroundColor(Color.RED)
+       }
+
+       override fun onItemClear() {
+           itemView.setBackgroundColor(0)
        }
 
     }
