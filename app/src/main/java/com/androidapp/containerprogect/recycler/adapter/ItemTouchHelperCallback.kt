@@ -1,7 +1,9 @@
 package com.androidapp.containerprogect.recycler.adapter
 
+import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.abs
 
 class ItemTouchHelperCallback(private val adapter: PlanetsAdapter) : ItemTouchHelper.Callback() {
 
@@ -49,5 +51,24 @@ class ItemTouchHelperCallback(private val adapter: PlanetsAdapter) : ItemTouchHe
         super.clearView(recyclerView, viewHolder)
         val itemViewHolder = viewHolder as ItemTouchHelperViewHolder
         itemViewHolder.onItemClear()
+    }
+
+    //метод добовляющий затемнения viewHolder при смахивании
+    override fun onChildDraw(
+        c: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+            val width = viewHolder.itemView.width.toFloat()
+            val alpha = 1.0f - abs(dX) / width
+            viewHolder.itemView.alpha = alpha
+            viewHolder.itemView.translationX = dX
+        }
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 }

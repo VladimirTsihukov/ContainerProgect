@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.recycler.OnListenerClickListener
 import com.androidapp.containerprogect.recycler.adapter.ItemTouchHelperCallback
+import com.androidapp.containerprogect.recycler.adapter.OnStartDragListener
 import com.androidapp.containerprogect.recycler.adapter.PlanetsAdapter
 import com.androidapp.containerprogect.recycler.data.DataPlanet
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,13 +20,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: PlanetsAdapter
+    private lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         recycler = findViewById(R.id.container)
-        adapter = PlanetsAdapter(click)
+        adapter = PlanetsAdapter(click, startDragListener)
         recycler.adapter = adapter
         recycler.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
@@ -40,7 +42,8 @@ class MainActivity : AppCompatActivity() {
             adapter.appendItem()
         }
 
-        ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(recycler)
+        itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+        itemTouchHelper.attachToRecyclerView(recycler)
     }
 
     private val click = object : OnListenerClickListener {
@@ -50,6 +53,12 @@ class MainActivity : AppCompatActivity() {
                 "id - ${data.id}, name - ${data.name} ",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private val startDragListener = object : OnStartDragListener {
+        override fun onStartDragListener(viewHolder: RecyclerView.ViewHolder) {
+            itemTouchHelper.startDrag(viewHolder)
         }
     }
 }

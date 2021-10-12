@@ -3,8 +3,10 @@ package com.androidapp.containerprogect.recycler.adapter
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.*
 import com.androidapp.containerprogect.recycler.OnListenerClickListener
@@ -12,8 +14,10 @@ import com.androidapp.containerprogect.recycler.data.DataPlanet
 import kotlinx.android.synthetic.main.activiry_recycler_item_earth.view.*
 import kotlinx.android.synthetic.main.activiry_recycler_item_mars.view.*
 
-class PlanetsAdapter(private val click: OnListenerClickListener) :
-    RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
+class PlanetsAdapter(
+    private val click: OnListenerClickListener,
+    private val dragListener: OnStartDragListener,
+) : RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
 
     var listData = mutableListOf<Pair<DataPlanet, Boolean>>()
     set(value) {
@@ -71,7 +75,7 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
     //////////////////////////////////////////////////////////////////////////////////////////
 
    inner class MarsHolder(private val view: View) : BaseViewHolder(view), ItemTouchHelperViewHolder {
-       @SuppressLint("SetTextI18n")
+       @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
        override fun bind(data: Pair<DataPlanet, Boolean>) {
            view.marsTextView.text = "${data.first.name} - ${data.first.id}"
            itemView.marsDescriptionTextView.visibility =
@@ -84,6 +88,12 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
                moveItemUp.setOnClickListener { movedUp() }
                moveItemDown.setOnClickListener { movedDown() }
                marsTextView.setOnClickListener { setDescription() }
+               dragHandleImageView.setOnTouchListener { _, event ->
+                   if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                       dragListener.onStartDragListener(this@MarsHolder)
+                   }
+                   false
+               }
            }
        }
 
@@ -123,11 +133,11 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
        }
 
        override fun onItemSelected() {
-           itemView.setBackgroundColor(Color.RED)
+           itemView.setBackgroundColor(Color.LTGRAY)
        }
 
        override fun onItemClear() {
-           itemView.setBackgroundColor(0)
+           itemView.setBackgroundColor(Color.WHITE)
        }
 
     }
