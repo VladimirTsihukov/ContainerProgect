@@ -14,15 +14,15 @@ import kotlinx.android.synthetic.main.activiry_recycler_item_mars.view.*
 class PlanetsAdapter(private val click: OnListenerClickListener) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
-    var listData = mutableListOf<DataPlanet>()
+    var listData = mutableListOf<Pair<DataPlanet, Boolean>>()
     set(value) {
         field = value
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (listData[position].name == PLANET_HEADER) return TYPE_HEADER
-        return if (listData[position].name == PLANET_EARTH) TYPE_EARTH else TYPE_MARS
+        if (listData[position].first.name == PLANET_HEADER) return TYPE_HEADER
+        return if (listData[position].first.name == PLANET_EARTH) TYPE_EARTH else TYPE_MARS
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -38,14 +38,14 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.bind(listData[position])
         holder.itemView.setOnClickListener {
-            click.onItemClick(listData[position])
+            click.onItemClick(listData[position].first)
         }
     }
 
     override fun getItemCount(): Int = listData.size
 
     fun appendItem() {
-        listData.add(generateItem())
+        listData.add(Pair(generateItem(), false))
         notifyDataSetChanged()
     }
 
@@ -57,19 +57,30 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
 
    inner class MarsHolder(private val view: View) : BaseViewHolder(view) {
        @SuppressLint("SetTextI18n")
-       override fun bind(data: DataPlanet) {
-           view.marsTextView.text = "${data.name} - ${data.id}"
+       override fun bind(data: Pair<DataPlanet, Boolean>) {
+           view.marsTextView.text = "${data.first.name} - ${data.first.id}"
+           itemView.marsDescriptionTextView.visibility =
+               if (listData[layoutPosition].second) View.VISIBLE
+               else View.GONE
 
            with(itemView) {
                addItemImageView.setOnClickListener { addItem() }
                removeItemImageView.setOnClickListener { deleteItem() }
                moveItemUp.setOnClickListener { movedUp() }
                moveItemDown.setOnClickListener { movedDown() }
+               marsTextView.setOnClickListener { setDescription() }
            }
        }
 
+       private fun setDescription() {
+           listData[layoutPosition] = listData[layoutPosition].let {
+               it.first to !it.second
+           }
+           notifyItemChanged(layoutPosition)
+       }
+
        private fun addItem() {
-           listData.add(layoutPosition, generateItem())
+           listData.add(layoutPosition, Pair(generateItem(), false))
            notifyItemInserted(layoutPosition)
        }
 
@@ -88,7 +99,7 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
        }
 
        private fun movedDown() {
-           layoutPosition.takeIf { it <  listData.size - 1}?.also { position ->
+           layoutPosition.takeIf { it < listData.size - 1 }?.also { position ->
                listData.removeAt(position).let {
                    listData.add(position - 1, it)
                }
@@ -99,14 +110,13 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
     }
 
     inner class EarthHolder(private val view: View) : BaseViewHolder(view) {
-        override fun bind(data: DataPlanet) {
-            view.earth_textView.text = data.name
+        override fun bind(data: Pair<DataPlanet, Boolean>) {
+            view.earth_textView.text = data.first.name
         }
     }
 
     inner class HeaderHolder(view: View) : BaseViewHolder(view) {
-        override fun bind(data: DataPlanet) {
-        }
+        override fun bind(data: Pair<DataPlanet, Boolean>) {}
     }
 
     companion object {

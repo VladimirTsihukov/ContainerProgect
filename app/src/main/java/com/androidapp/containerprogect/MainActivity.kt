@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         recycler.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
         val list = mutableListOf(
-            DataPlanet(id = ID++, PLANET_HEADER),
-            DataPlanet(id = ID++, PLANET_MARS),
+            Pair(DataPlanet(id = ID++, PLANET_HEADER), false),
+            Pair(DataPlanet(id = ID++, PLANET_MARS), false),
         )
 
         adapter.listData = list

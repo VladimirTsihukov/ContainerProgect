@@ -5,5 +5,5 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.recycler.data.DataPlanet
 
 abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    abstract fun bind(data: DataPlanet)
+    abstract fun bind(data: Pair<DataPlanet, Boolean>)
 }
