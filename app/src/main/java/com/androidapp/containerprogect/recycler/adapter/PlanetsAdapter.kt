@@ -60,8 +60,12 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
        override fun bind(data: DataPlanet) {
            view.marsTextView.text = "${data.name} - ${data.id}"
 
-           itemView.addItemImageView.setOnClickListener {addItem()}
-           itemView.removeItemImageView.setOnClickListener { deleteItem() }
+           with(itemView) {
+               addItemImageView.setOnClickListener { addItem() }
+               removeItemImageView.setOnClickListener { deleteItem() }
+               moveItemUp.setOnClickListener { movedUp() }
+               moveItemDown.setOnClickListener { movedDown() }
+           }
        }
 
        private fun addItem() {
@@ -73,6 +77,25 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
            listData.removeAt(layoutPosition)
            notifyItemRemoved(layoutPosition)
        }
+
+       private fun movedUp() {
+           layoutPosition.takeIf { it > 1 }?.also { position ->
+               listData.removeAt(position).let {
+                   listData.add(position - 1, it)
+               }
+               notifyItemMoved(position, position - 1)
+           }
+       }
+
+       private fun movedDown() {
+           layoutPosition.takeIf { it <  listData.size - 1}?.also { position ->
+               listData.removeAt(position).let {
+                   listData.add(position - 1, it)
+               }
+               notifyItemMoved(position, position + 1)
+           }
+       }
+
     }
 
     inner class EarthHolder(private val view: View) : BaseViewHolder(view) {
