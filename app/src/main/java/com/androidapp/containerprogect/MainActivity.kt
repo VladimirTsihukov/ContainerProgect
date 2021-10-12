@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.recycler.OnListenerClickListener
 import com.androidapp.containerprogect.recycler.adapter.PlanetsAdapter
 import com.androidapp.containerprogect.recycler.data.DataPlanet
+import kotlinx.android.synthetic.main.activity_main.*
+
+var ID = 0
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,18 +27,16 @@ class MainActivity : AppCompatActivity() {
         recycler.adapter = adapter
         recycler.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
-        val list = listOf(
-            DataPlanet(0, PLANET_HEADER),
-            DataPlanet(1, PLANET_EARTH),
-            DataPlanet(2, PLANET_EARTH),
-            DataPlanet(3, PLANET_MARS),
-            DataPlanet(4, PLANET_MARS),
-            DataPlanet(5, PLANET_EARTH),
-            DataPlanet(6, PLANET_EARTH),
-            DataPlanet(7, PLANET_MARS),
+        val list = mutableListOf(
+            DataPlanet(id = ID++, PLANET_HEADER),
+            DataPlanet(id = ID++, PLANET_MARS),
         )
 
         adapter.listData = list
+
+        res_activity_fab.setOnClickListener {
+            adapter.appendItem()
+        }
     }
 
     private val click = object : OnListenerClickListener {
