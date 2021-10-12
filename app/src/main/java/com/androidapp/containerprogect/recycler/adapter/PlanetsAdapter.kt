@@ -7,10 +7,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MotionEventCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.*
 import com.androidapp.containerprogect.recycler.OnListenerClickListener
 import com.androidapp.containerprogect.recycler.data.DataPlanet
+import com.androidapp.containerprogect.recycler.diffUtils.ChangeDataName
+import com.androidapp.containerprogect.recycler.diffUtils.DiffUtilCallback
 import kotlinx.android.synthetic.main.activiry_recycler_item_earth.view.*
 import kotlinx.android.synthetic.main.activiry_recycler_item_mars.view.*
 
@@ -19,10 +22,13 @@ class PlanetsAdapter(
     private val dragListener: OnStartDragListener,
 ) : RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
 
-    var listData = mutableListOf<Pair<DataPlanet, Boolean>>()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
+    private var listData = mutableListOf<Pair<DataPlanet, Boolean>>()
+
+    fun setItem(newList: List<Pair<DataPlanet, Boolean>>) {
+        val result = DiffUtil.calculateDiff(DiffUtilCallback(listData, newList))
+        result.dispatchUpdatesTo(this)
+        listData.clear()
+        listData.addAll(newList)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -40,6 +46,20 @@ class PlanetsAdapter(
         }
     }
 
+    override fun onBindViewHolder(
+        holder: BaseViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            payloads.find { it is ChangeDataName }?.let {
+                holder.itemView.marsTextView.text = (it as ChangeDataName).newName
+            }
+        }
+    }
+
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.bind(listData[position])
         holder.itemView.setOnClickListener {
@@ -51,7 +71,7 @@ class PlanetsAdapter(
 
     fun appendItem() {
         listData.add(Pair(generateItem(), false))
-        notifyDataSetChanged()
+        notifyItemInserted(listData.size)
     }
 
     private fun generateItem(): DataPlanet {
@@ -126,7 +146,7 @@ class PlanetsAdapter(
        private fun movedDown() {
            layoutPosition.takeIf { it < listData.size - 1 }?.also { position ->
                listData.removeAt(position).let {
-                   listData.add(position - 1, it)
+                   listData.add(position + 1, it)
                }
                notifyItemMoved(position, position + 1)
            }

@@ -18,6 +18,7 @@ var ID = 0
 
 class MainActivity : AppCompatActivity() {
 
+    private var isNewList = false
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: PlanetsAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -34,9 +35,10 @@ class MainActivity : AppCompatActivity() {
         val list = mutableListOf(
             Pair(DataPlanet(id = ID++, PLANET_HEADER), false),
             Pair(DataPlanet(id = ID++, PLANET_MARS), false),
+            Pair(DataPlanet(id = ID++, PLANET_MARS), false),
         )
 
-        adapter.listData = list
+        adapter.setItem(list)
 
         res_activity_fab.setOnClickListener {
             adapter.appendItem()
@@ -44,6 +46,36 @@ class MainActivity : AppCompatActivity() {
 
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
         itemTouchHelper.attachToRecyclerView(recycler)
+
+        res_activity_fab_diff_util.setOnClickListener { changeAdapter() }
+    }
+
+    private fun changeAdapter() {
+        adapter.setItem(createItemList(isNewList))
+        isNewList = !isNewList
+    }
+
+    private fun createItemList(checkList: Boolean): List<Pair<DataPlanet, Boolean>> {
+        return when (checkList) {
+            true -> listOf(
+                Pair(DataPlanet(id = 0, PLANET_HEADER), false),
+                Pair(DataPlanet(id = 1, PLANET_MARS), false),
+                Pair(DataPlanet(id = 2, PLANET_MARS), false),
+                Pair(DataPlanet(id = 3, PLANET_MARS), false),
+                Pair(DataPlanet(id = 4, PLANET_MARS), false),
+                Pair(DataPlanet(id = 5, PLANET_MARS), false),
+                Pair(DataPlanet(id = 6, PLANET_MARS), false),
+            )
+            false ->  listOf(
+                Pair(DataPlanet(id = 0, PLANET_HEADER), false),
+                Pair(DataPlanet(id = 1, PLANET_MARS), false),
+                Pair(DataPlanet(id = 2, PLANET_VENUS), false),
+                Pair(DataPlanet(id = 3, PLANET_MARS), false),
+                Pair(DataPlanet(id = 4, PLANET_MARS), false),
+                Pair(DataPlanet(id = 5, PLANET_VENUS), false),
+                Pair(DataPlanet(id = 6, PLANET_VENUS), false),
+            )
+        }
     }
 
     private val click = object : OnListenerClickListener {
