@@ -1,33 +1,46 @@
 package com.androidapp.containerprogect
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.androidapp.containerprogect.recycler.PlanetsAdapter
-import com.androidapp.containerprogect.recycler.data.DataMars
+import com.androidapp.containerprogect.recycler.OnListenerClickListener
+import com.androidapp.containerprogect.recycler.adapter.PlanetsAdapter
+import com.androidapp.containerprogect.recycler.data.DataPlanet
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recycler: RecyclerView
-    private val adapter by lazy { PlanetsAdapter() }
+    private lateinit var adapter: PlanetsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         recycler = findViewById(R.id.container)
+        adapter = PlanetsAdapter(click)
         recycler.adapter = adapter
 
         val list = listOf(
-            DataMars(1, "Mars_1"),
-            DataMars(2, "Mars_2"),
-            DataMars(3, "Mars_3"),
-            DataMars(4, "Mars_4"),
-            DataMars(5, "Mars_5"),
-            DataMars(6, "Mars_6"),
-            DataMars(7, "Mars_7"),
+            DataPlanet(1, PLANET_EARTH),
+            DataPlanet(2, PLANET_EARTH),
+            DataPlanet(3, PLANET_MARS),
+            DataPlanet(4, PLANET_MARS),
+            DataPlanet(5, PLANET_EARTH),
+            DataPlanet(6, PLANET_EARTH),
+            DataPlanet(7, PLANET_MARS),
         )
 
         adapter.listData = list
+    }
+
+    private val click = object : OnListenerClickListener {
+        override fun onItemClick(data: DataPlanet) {
+            Toast.makeText(
+                applicationContext,
+                "id - ${data.id}, name - ${data.name} ",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
