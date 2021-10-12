@@ -3,6 +3,8 @@ package com.androidapp.containerprogect
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.recycler.OnListenerClickListener
 import com.androidapp.containerprogect.recycler.adapter.PlanetsAdapter
@@ -20,8 +22,10 @@ class MainActivity : AppCompatActivity() {
         recycler = findViewById(R.id.container)
         adapter = PlanetsAdapter(click)
         recycler.adapter = adapter
+        recycler.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
         val list = listOf(
+            DataPlanet(0, PLANET_HEADER),
             DataPlanet(1, PLANET_EARTH),
             DataPlanet(2, PLANET_EARTH),
             DataPlanet(3, PLANET_MARS),

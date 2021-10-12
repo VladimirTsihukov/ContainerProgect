@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.androidapp.containerprogect.PLANET_EARTH
+import com.androidapp.containerprogect.PLANET_HEADER
 import com.androidapp.containerprogect.R
 import com.androidapp.containerprogect.recycler.OnListenerClickListener
 import com.androidapp.containerprogect.recycler.data.DataPlanet
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.activiry_recycler_item_earth.view.*
 import kotlinx.android.synthetic.main.activiry_recycler_item_mars.view.*
 
 class PlanetsAdapter(private val click: OnListenerClickListener) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<BaseViewHolder>() {
 
     var listData = listOf<DataPlanet>()
     set(value) {
@@ -21,32 +22,24 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (listData[position].name == PLANET_HEADER) return TYPE_HEADER
         return if (listData[position].name == PLANET_EARTH) TYPE_EARTH else TYPE_MARS
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return if (viewType == TYPE_EARTH) {
-            EarthHolder(inflater.inflate(R.layout.activiry_recycler_item_earth, parent, false))
-        } else {
-            MarsHolder(inflater.inflate(R.layout.activiry_recycler_item_mars, parent, false))
+        return when(viewType) {
+            TYPE_HEADER -> HeaderHolder(inflater.inflate(R.layout.activity_recycler_item_header, parent, false))
+            TYPE_EARTH -> EarthHolder(inflater.inflate(R.layout.activiry_recycler_item_earth, parent, false))
+            TYPE_MARS -> MarsHolder(inflater.inflate(R.layout.activiry_recycler_item_mars, parent, false))
+            else -> throw IllegalArgumentException()
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is EarthHolder -> {
-                holder.onBindEarth(listData[position])
-                holder.itemView.setOnClickListener {
-                    click.onItemClick(listData[position])
-                }
-            }
-            is MarsHolder -> {
-                holder.onBindMars(listData[position])
-                holder.itemView.setOnClickListener {
-                    click.onItemClick(listData[position])
-                }
-            }
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        holder.bind(listData[position])
+        holder.itemView.setOnClickListener {
+            click.onItemClick(listData[position])
         }
     }
 
@@ -54,22 +47,26 @@ class PlanetsAdapter(private val click: OnListenerClickListener) :
 
     //////////////////////////////////////////////////////////////////////////////////////////
 
-   inner class MarsHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-
-       fun onBindMars(data: DataPlanet) {
+   inner class MarsHolder(private val view: View) : BaseViewHolder(view) {
+       override fun bind(data: DataPlanet) {
            view.marsTextView.text = data.name
        }
     }
 
-    inner class EarthHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class EarthHolder(private val view: View) : BaseViewHolder(view) {
+        override fun bind(data: DataPlanet) {
+            view.earth_textView.text = data.name
+        }
+    }
 
-        fun onBindEarth(dataEarth: DataPlanet) {
-            view.earth_textView.text = dataEarth.name
+    inner class HeaderHolder(view: View) : BaseViewHolder(view) {
+        override fun bind(data: DataPlanet) {
         }
     }
 
     companion object {
-        private const val TYPE_EARTH = 0
-        private const val TYPE_MARS = 1
+        private const val TYPE_HEADER = 0
+        private const val TYPE_EARTH = 1
+        private const val TYPE_MARS = 2
     }
 }
