@@ -24,4 +24,8 @@ class MainActivity : AppCompatActivity() {
     fun testCommit4() {
 
     }
+
+    fun testCommit5() {
+
+    }
 }
