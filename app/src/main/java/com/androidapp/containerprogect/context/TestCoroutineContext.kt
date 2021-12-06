@@ -28,6 +28,6 @@ class TestCoroutineContext {
         }
     }
 
-    private fun contextToString(context: CoroutineContext) : String =
+    private fun contextToString(context: CoroutineContext): String =
         "Job = ${context[Job]}, Dispatcher = ${context[ContinuationInterceptor]}"
 }

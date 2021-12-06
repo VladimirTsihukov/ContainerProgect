@@ -6,7 +6,7 @@ import com.androidapp.containerprogect.log
 import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.delay
 
-class TestActor: ViewModel() {
+class TestActor : ViewModel() {
     private val actorChannel = viewModelScope.actor<Unit> {
         for (click in channel) {
             delay(1000)

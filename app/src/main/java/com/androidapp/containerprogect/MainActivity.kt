@@ -52,16 +52,16 @@ class MainActivity : AppCompatActivity() {
 
 
         mainScope.launch {
-    /*        lesson21BuildsFlow.createFlow().collect {
-                Log.i(TAG, it)
-            }
+            /*        lesson21BuildsFlow.createFlow().collect {
+                        Log.i(TAG, it)
+                    }
 
-            lesson21BuildsFlow.createAsFlow().collect {
-                Log.i(TAG, "$it")
-            }
+                    lesson21BuildsFlow.createAsFlow().collect {
+                        Log.i(TAG, "$it")
+                    }
 
-            val count = lesson21BuildsFlow.createFlowTerminalFlow()
-            Log.i(TAG, "count = $count")*/
+                    val count = lesson21BuildsFlow.createFlowTerminalFlow()
+                    Log.i(TAG, "count = $count")*/
 
             lesson21BuildsFlow.createAsynchronousChannelFlow().collect {
                 Log.i(TAG, "Test: $it")
@@ -138,15 +138,15 @@ suspend fun View.awaitLayoutChange() = suspendCancellableCoroutine<Unit> { cont 
     val listener = object : View.OnLayoutChangeListener {
 
         override fun onLayoutChange(
-            view: View?,
-            left: Int,
-            top: Int,
-            right: Int,
-            bottom: Int,
-            oldLeft: Int,
-            oldTop: Int,
-            oldRight: Int,
-            oldBottom: Int
+                view: View?,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
         ) {
             view?.removeOnLayoutChangeListener(this)
             cont.resume(Unit)

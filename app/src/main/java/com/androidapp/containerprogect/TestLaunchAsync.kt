@@ -7,7 +7,7 @@ class TestLaunchAsync {
     val scope = CoroutineScope(Job())
     private lateinit var job: Job
 
-     fun onRun() {
+    fun onRun() {
         log("onRun, start")
 
         job = scope.launch {
@@ -23,7 +23,7 @@ class TestLaunchAsync {
         log("onRun, end")
     }
 
-     fun onRun2() {
+    fun onRun2() {
         scope.launch {
             log("parent coroutine, start")
 
@@ -40,7 +40,7 @@ class TestLaunchAsync {
         }
     }
 
-     fun onRun3() {
+    fun onRun3() {
         scope.launch {
             log("parent coroutine, start")
 
@@ -63,7 +63,7 @@ class TestLaunchAsync {
         }
     }
 
-     fun coroutineCreate() {
+    fun coroutineCreate() {
         log("coroutineCreate, start")
         job = scope.launch(start = CoroutineStart.LAZY) {
             log("coroutine, start")
@@ -73,13 +73,13 @@ class TestLaunchAsync {
         log("coroutineCreate, end")
     }
 
-     fun coroutineStart() {
+    fun coroutineStart() {
         log("coroutineStart, start")
         job.start()
         log("coroutineStart, end")
     }
 
-     fun onRunAsync() {
+    fun onRunAsync() {
         scope.launch {
             log("parent coroutine, start")
 
@@ -99,7 +99,7 @@ class TestLaunchAsync {
         }
     }
 
-     fun onRun4() {
+    fun onRun4() {
         scope.launch {
             log("parent coroutine, start")
 
@@ -114,12 +114,12 @@ class TestLaunchAsync {
         }
     }
 
-     fun onRun5() {
+    fun onRun5() {
         scope.launch {
             log("№1 parent coroutine, start")
 
-            val data1 = async {getData1()}
-            val data2 = async {getData2()}
+            val data1 = async { getData1() }
+            val data2 = async { getData2() }
 
             log("№2 WAIT parent coroutine")
             delay(2000)
@@ -131,19 +131,19 @@ class TestLaunchAsync {
         }
     }
 
-     suspend fun getData1() : String {
+    suspend fun getData1(): String {
         log("№3 Start getData 1")
         delay(1000)
         return "DATA 1"
     }
 
-     suspend fun getData2() : String {
+    suspend fun getData2(): String {
         log("№4 Start getData 2")
         delay(1500)
         return "DATA 2"
     }
 
-     fun onCancel() {
+    fun onCancel() {
         log("onCancel")
         scope.cancel()
     }

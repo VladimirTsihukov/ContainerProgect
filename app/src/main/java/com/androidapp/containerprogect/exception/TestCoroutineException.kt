@@ -11,8 +11,10 @@ class TestCoroutineException {
         Job()
                 + Dispatchers.Default
                 + CoroutineExceptionHandler { coroutineContext, throwable ->
-            log("CoroutineExceptionHandler - ${throwable.message}," +
-                    " name - ${coroutineContext[CoroutineName]?.name}")
+            log(
+                "CoroutineExceptionHandler - ${throwable.message}," +
+                        " name - ${coroutineContext[CoroutineName]?.name}"
+            )
         })
 
     private val handler = CoroutineExceptionHandler { coroutineContext, throwable ->
@@ -88,9 +90,9 @@ class TestCoroutineException {
 
             val deferred =
                 async(SupervisorJob(coroutineContext[Job]) + CoroutineName("Async")) {
-                Integer.parseInt("W")
-                "Result"
-            }
+                    Integer.parseInt("W")
+                    "Result"
+                }
 
             log("Before result")
             val result = deferred.await()

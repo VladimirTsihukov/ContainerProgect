@@ -48,10 +48,10 @@ class MyClassTest : TestCase() {
 
     @Test
     fun testTest() = runBlockingTest(testDispatchers) {
-            myClass.fetchData()
-            assertTrue(myClass.showLoading)
-            assertFalse(myClass.showLoading)
-        }
+        myClass.fetchData()
+        assertTrue(myClass.showLoading)
+        assertFalse(myClass.showLoading)
+    }
 
     @After
     fun tearDownCoroutine() {

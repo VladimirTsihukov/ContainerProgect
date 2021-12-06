@@ -27,7 +27,7 @@ class TestCoroutineSelect {
 
                 //2
                 async2.onAwait {
-                   //4
+                    //4
                     it
                 }
 

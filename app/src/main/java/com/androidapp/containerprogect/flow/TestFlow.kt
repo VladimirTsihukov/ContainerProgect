@@ -125,9 +125,10 @@ class TestFlow {
         }
     }
 
-    fun createMyChannelFlow() = flow<Int> {
+    @ExperimentalCoroutinesApi
+    fun createMyChannelFlow() = flow {
         coroutineScope {
-            val channel = produce<Int> {
+            val channel = produce {
                 log("Start channel")
                 launch {
                     delay(1000)
@@ -150,7 +151,7 @@ class TestFlow {
         }
     }
 
-    fun channelFlow() = channelFlow<Int> {
+    fun channelFlow() = channelFlow {
         log("Start channelFlow")
         launch {
             delay(1000)
@@ -174,13 +175,13 @@ class TestFlow {
                     emit(i)
                 }
             }.map { it * 10 }
-                .flowOn(Dispatchers.IO)
-                .onEach {
-                    delay(500)
-                    log("onEach $it")
-                }
-                .flowOn(Dispatchers.Main)
-                .collect()
+                    .flowOn(Dispatchers.IO)
+                    .onEach {
+                        delay(500)
+                        log("onEach $it")
+                    }
+                    .flowOn(Dispatchers.Main)
+                    .collect()
         }
     }
 
@@ -189,9 +190,9 @@ class TestFlow {
             emit(i)
         }
     }
-        .buffer(5)
-        .flowOn(Dispatchers.IO)
-        .produceIn(scope)
+            .buffer(5)
+            .flowOn(Dispatchers.IO)
+            .produceIn(scope)
 
     fun testErrorInFlow() {
         val flow = flow {
@@ -210,10 +211,10 @@ class TestFlow {
 
         scope.launch {
             flow
-                .catch { log("Catch error - ${it.message}") }
-                .collect {
-                    log("collect - $it")
-                }
+                    .catch { log("Catch error - ${it.message}") }
+                    .collect {
+                        log("collect - $it")
+                    }
         }
 
     }
@@ -223,14 +224,14 @@ class TestFlow {
 
         scope.launch {
             flow
-                .map { it.toInt() }
-                .catch {
-                    log("Catch error - ${it.message}")
-                    emit(345)
-                }
-                .collect {
-                    log("Collect result - $it")
-                }
+                    .map { it.toInt() }
+                    .catch {
+                        log("Catch error - ${it.message}")
+                        emit(345)
+                    }
+                    .collect {
+                        log("Collect result - $it")
+                    }
         }
     }
 
@@ -239,18 +240,18 @@ class TestFlow {
 
         scope.launch {
             flow
-                .map { it.toInt() }
-                .retry(2) {
-                    log("Retry - ${it.message}")
-                    true
-                }
-                .catch {
-                    log("Catch error - ${it.message}")
-                    emit(345)
-                }
-                .collect {
-                    log("Collect result - $it")
-                }
+                    .map { it.toInt() }
+                    .retry(2) {
+                        log("Retry - ${it.message}")
+                        true
+                    }
+                    .catch {
+                        log("Catch error - ${it.message}")
+                        emit(345)
+                    }
+                    .collect {
+                        log("Collect result - $it")
+                    }
         }
     }
 
@@ -259,18 +260,18 @@ class TestFlow {
 
         scope.launch {
             flow
-                .map { it.toInt() }
-                .retryWhen { cause, attempt ->
-                    log("Error - ${cause.message}, attempt - $attempt")
-                    cause is NumberFormatException && attempt < 2
-                }
-                .catch {
-                    log("Catch error - ${it.message}")
-                    emit(345)
-                }
-                .collect {
-                    log("Collect result - $it")
-                }
+                    .map { it.toInt() }
+                    .retryWhen { cause, attempt ->
+                        log("Error - ${cause.message}, attempt - $attempt")
+                        cause is NumberFormatException && attempt < 2
+                    }
+                    .catch {
+                        log("Catch error - ${it.message}")
+                        emit(345)
+                    }
+                    .collect {
+                        log("Collect result - $it")
+                    }
         }
     }
 
@@ -280,10 +281,10 @@ class TestFlow {
         scope.launch {
             try {
                 flow
-                    .collect {
-                        if (it == 3) cancel()
-                        log("collect $it")
-                    }
+                        .collect {
+                            if (it == 3) cancel()
+                            log("collect $it")
+                        }
             } catch (e: Exception) {
                 log("Error catch - ${e.message}")
             }

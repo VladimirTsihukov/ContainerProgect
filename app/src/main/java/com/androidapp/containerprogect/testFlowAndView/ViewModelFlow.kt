@@ -12,11 +12,11 @@ class ViewModelFlow : ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
     private val searchResult = _searchQuery.asStateFlow()
-        .debounce(500)
-        .filter { it.length > 3 }
-        .mapLatest {
-            "Flow - $it"
-        }
+            .debounce(500)
+            .filter { it.length > 3 }
+            .mapLatest {
+                "Flow - $it"
+            }
 
     val liveData = MutableLiveData<String>()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)

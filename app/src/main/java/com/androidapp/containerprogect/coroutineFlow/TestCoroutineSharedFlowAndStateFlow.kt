@@ -38,12 +38,12 @@ class TestCoroutineSharedFlowAndStateFlow {
 
     fun subscriptionCount() {
         _eventBus.subscriptionCount
-            .map { count -> count > 0 } // map count into active/inactive flag
-            .distinctUntilChanged() // only react to true<->false changes
-            .onEach { isActive -> // configure an action
-                if (isActive) log("SubscriptionCount - True") else log("SubscriptionCount - False")
-            }
-            .launchIn(scope) // launch it
+                .map { count -> count > 0 } // map count into active/inactive flag
+                .distinctUntilChanged() // only react to true<->false changes
+                .onEach { isActive -> // configure an action
+                    if (isActive) log("SubscriptionCount - True") else log("SubscriptionCount - False")
+                }
+                .launchIn(scope) // launch it
     }
 
     fun differenceStateFlow() {
