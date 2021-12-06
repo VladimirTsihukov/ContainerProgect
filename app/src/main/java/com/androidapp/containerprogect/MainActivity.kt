@@ -40,8 +40,13 @@ class MainActivity : AppCompatActivity() {
         btn_spannable.text = btnSpannable
         btn_spannable.setOnClickListener {
             val testColorSpan = SpannableString("Зеленый текст курсивом в Toast")
-            testColorSpan.setSpan(StyleSpan(Typeface.ITALIC),0, 22, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            testColorSpan.setSpan(ForegroundColorSpan(getColor(R.color.teal_200)), 0, 22, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            testColorSpan.setSpan(StyleSpan(Typeface.ITALIC), 0, 22, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            testColorSpan.setSpan(
+                ForegroundColorSpan(getColor(R.color.teal_200)),
+                0,
+                22,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             makeText(this, testColorSpan, Toast.LENGTH_SHORT).show()
         }
 
@@ -50,8 +55,12 @@ class MainActivity : AppCompatActivity() {
         text_span_2.text = testSpannable
 
         //BackgroundColorSpan
-        spannableString.setSpan(BackgroundColorSpan(ContextCompat.getColor
-            (this, R.color.purple_500)), 6, 13 ,0)
+        spannableString.setSpan(
+            BackgroundColorSpan(
+                ContextCompat.getColor
+                    (this, R.color.purple_500)
+            ), 6, 13, 0
+        )
         text_span_3.text = spannableString
 
         //ClickSpan
@@ -104,18 +113,25 @@ class MainActivity : AppCompatActivity() {
         text_under_relative.text = sizeSpan
 
         //BulletSpan
-        val spannableBullet = SpannableString("My text " +
-                "\nbullet one " +
-                "\nbullet two")
+        val spannableBullet = SpannableString(
+            "My text " +
+                    "\nbullet one " +
+                    "\nbullet two"
+        )
         //spannableBullet[9..18] = BulletSpan(40, Color.BLUE, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         //spannableBullet[10..spannableBullet.length] = BulletSpan(40, Color.RED, 10)
-        spannableBullet.setSpan(BulletSpan(40, Color.BLUE, 10),9, 20, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableBullet.setSpan(BulletSpan(40, Color.GREEN, 15), 21, spannableBullet.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableBullet.setSpan(BulletSpan(40, Color.BLUE, 10), 9, 20, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableBullet.setSpan(
+            BulletSpan(40, Color.GREEN, 15),
+            21,
+            spannableBullet.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         text_under_bullet.text = spannableBullet
 
         //QuoteSpan
         val strQuoteSpan = "Первое предложение цитаты\nВторое предложнеие цитаты".toSpannable()
-        strQuoteSpan.setSpan(QuoteSpan(Color.RED), 0, 0,0)
+        strQuoteSpan.setSpan(QuoteSpan(Color.RED), 0, 0, 0)
         text_under_quote_span.text = strQuoteSpan
 
         //AlignmentSpan
@@ -157,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                 "которые помогают изучать программирование").toSpannable()
 
         val iconBitmap = resources.getDrawable(R.drawable.ic_baseline_bug_report_24).toBitmap()
-        iconBitmap.scale(iconBitmap.width/4, iconBitmap.height/4, true)
+        iconBitmap.scale(iconBitmap.width / 4, iconBitmap.height / 4, true)
         textIconMarginSpan[0..10] = IconMarginSpan(iconBitmap, 10)
         text_margin_icon.text = textIconMarginSpan
 
