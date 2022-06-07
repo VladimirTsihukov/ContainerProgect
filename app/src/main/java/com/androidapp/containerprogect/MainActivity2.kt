@@ -6,15 +6,14 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
-const val TAG_TEST = "tag_test"
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
 
-        findViewById<Button>(R.id.btn_main).setOnClickListener {
-            Log.i(TAG_TEST, "Click for main Btn")
-            startActivity(Intent(this, MainActivity2::class.java))
+        findViewById<Button>(R.id.btn_second_activity).setOnClickListener {
+            Log.i(TAG_TEST, "Click for second btn Activity")
+            startActivity(Intent(this, MainActivity3::class.java))
         }
     }
 }
