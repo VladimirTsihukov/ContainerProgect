@@ -1,6 +1,7 @@
 package com.androidapp.containerprogect
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -31,5 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     fun testCommit6() {
 
+    }
+
+    fun cherryPickTest() {
+        Log.i("TAG","Cherry-pick")
     }
 }
