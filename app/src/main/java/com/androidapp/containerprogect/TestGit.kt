@@ -1,15 +1,12 @@
 package com.androidapp.containerprogect
 
 class TestGit {
-    fun testGit() {
+
+    fun testSquash1() {
 
     }
 
-    fun testGit1() {
-
-    }
-
-    fun testGit2() {
+    fun testSquash2() {
 
     }
 }
