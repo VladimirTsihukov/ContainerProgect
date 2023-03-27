@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextInputLayoutStyleCustom" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeColor">@color/dark_dark_grey</item>
+<!--    <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColorHint">@color/yellow</item>
+        <item name="android:textColor">@color/yellow</item>
+        <item name="hintTextColor">@color/black</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="errorEnabled">true</item>
+        <item name="counterEnabled">false</item>-->
+        <item name="android:theme">@style/exampleCursor</item>
+    </style>
+
+    <style name="exampleCursor" parent="ThemeOverlay.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="colorControlActivated">@color/red</item>
+    </style>
+
+</resources>
