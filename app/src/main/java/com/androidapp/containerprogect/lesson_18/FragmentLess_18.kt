@@ -19,7 +19,7 @@ class FragmentLess_18 : Fragment(R.layout.fragment_less_9) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        function_4()
+        function_1()
     }
 
     private fun function_1() {
@@ -33,10 +33,16 @@ class FragmentLess_18 : Fragment(R.layout.fragment_less_9) {
             }
 
             launch {
-                delay(1_000)
-                log("Receive")
+                //delay(1_000)
+                log("Receive№1")
                 val i = channel.receive()
-                log("Receive $i, done")
+                log("Receive№1 $i, done")
+            }
+
+            launch {
+                log("Receive№2")
+                val i = channel.receive()
+                log("Receive№2 $i, done")
             }
         }
     }
