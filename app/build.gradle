@@ -4,13 +4,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "30.0.3"
+    namespace = "com.androidapp.containerprogect"
+
+    compileSdk 34
+    buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId "com.androidapp.containerprogect"
         minSdkVersion 23
-        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -45,6 +46,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2'
+    implementation 'androidx.activity:activity:1.9.3'
     testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

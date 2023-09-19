@@ -1,0 +1,6 @@
+
+Nkotlin:S1481="*Remove this unused "error" local variable.(ÝÃ¨Óÿÿÿÿÿ8¤Èª˜¸1
+>kotlin:S1128"Remove this unused import.(õ»ýÂÿÿÿÿÿ8¤Èª˜¸1
+ykotlin:S100"[Rename function "Lesson_18_1_Screen" to match the regular expression ^[a-zA-Z][a-zA-Z0-9]*$(õÀÅº8¤Èª˜¸1
+ykotlin:S100#"[Rename function "Lesson_18_2_Screen" to match the regular expression ^[a-zA-Z][a-zA-Z0-9]*$(Ø¡ÿ©8¤Èª˜¸1
+ykotlin:S1001"[Rename function "Lesson_18_3_Screen" to match the regular expression ^[a-zA-Z][a-zA-Z0-9]*$(¯¶¥þ8¤Èª˜¸1

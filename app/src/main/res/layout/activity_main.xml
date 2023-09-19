@@ -2,7 +2,7 @@
 <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:name="com.androidapp.containerprogect.lesson_23.FragmentLess_23"
+    android:name="com.androidapp.containerprogect.lesson_18.FragmentLess_18"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="fragment_9"
